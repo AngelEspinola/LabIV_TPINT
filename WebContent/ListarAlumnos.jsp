@@ -39,7 +39,7 @@
         <div class=" col-1"></div>
         <div class="col-10 card formulario">
             <div class="card-header text-center">
-                <h5 class="card-title">Ejemplo de listado</h5>
+                <h5 class="card-title">Alumnos</h5>
             </div>
             <div class=" card-body">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
