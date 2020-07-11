@@ -51,9 +51,9 @@
 	               <div class="dropdown-menu" aria-labelledby="ddlCursos">
 	                   <a class="dropdown-item" href="ServletCurso?Param=altaCurso">Alta</a>
 	                   <a class="dropdown-item" href="ServletCurso?Param=bajaCurso">Baja</a>
-                   <a class="dropdown-item" href="ModificarCurso.jsp">Modificacion</a>
+                   <a class="dropdown-item" href="ServletCurso?Param=modificarCurso">Modificacion</a>
                    <div class="dropdown-divider"></div>
-                   <a class="dropdown-item" href="ListarCursos.jsp">Listado</a>
+                   <a class="dropdown-item" href="ServletCurso?Param=listarCursos">Listado</a>
                    <div class="dropdown-divider"></div>
                    <a class="dropdown-item" href="ServletCalificar?IDDocente=1">Calificar Alumnos</a>
                	   </div>

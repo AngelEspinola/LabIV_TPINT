@@ -1,14 +1,15 @@
 package Dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import Entidades.Curso;
 
 public interface CursoDao {
 	public boolean insert(Curso curso);
-	public boolean modify(Curso curso, int ID);
+	public boolean modify(Curso curso);
 	public boolean delete(Curso curso);
 	public boolean baja(String ID);
-	public Curso read(Curso curso);
+	public Boolean read(Curso curso) throws SQLException;
 	public List<Curso> readAll();
 }
