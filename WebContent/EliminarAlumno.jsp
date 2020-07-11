@@ -22,9 +22,9 @@
 </div>
 <%
   	Alumno a = null;
-  	if (request.getAttribute("Alumno") != null)
+  	if (application.getAttribute("Alumno") != null)
 	{
-    	a=(Alumno)request.getAttribute("Alumno");
+    	a=(Alumno)application.getAttribute("Alumno");
 	}
 %>
 
@@ -106,21 +106,6 @@
                         <label class="form-control disabled" id="ddlProvincia" name="ddlProvincia"> <%=a!=null?a.getProvincia().getNombre():""%> </label>
                     </div>
                 </div>
-
-                <!--<div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                        <label class="form-check-label" for="invalidCheck">
-                            Agree to terms and conditions
-                        </label>
-                        <div class="invalid-feedback">
-                            You must agree before submitting.
-                        </div>
-                    </div>
-                </div>-->
-                        
-
-
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop" type="submit" name="btnAlumnoBaja" value="baja">
     Eliminar
@@ -141,7 +126,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" type="submit" name="btnConfirmarAlumnoBaja" value="aceptar" >Confirmar</button>
+          <a class="btn btn-danger" href="ServletAlumno?btnAlumnoBaja=1">Confirmar</a>
         </div>
       </div>
     </div>

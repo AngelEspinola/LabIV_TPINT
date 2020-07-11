@@ -78,11 +78,11 @@ public class ServletDocente extends HttpServlet {
 			docente = DDao.buscarDocente(docente);
 			if(docente != null)
 			{
-				request.setAttribute("Docente", docente);
+				getServletContext().setAttribute("Docente", docente);
 			}
 			else
 			{
-				request.setAttribute("Docente", new Docente());
+				getServletContext().setAttribute("Docente", new Docente());
 			}
 			/*
 			System.out.println("docente DNI:"+ docente.getDni());
@@ -96,20 +96,27 @@ public class ServletDocente extends HttpServlet {
 		{
 			System.out.println("btnDocenteBaja != null");
 			
-			System.out.println("txtDni:"+ request.getParameter("txtDni"));
-			
-			docente.setLegajo(request.getParameter("txtLegajo"));
-			docente.setDni(request.getParameter("txtDni"));
-			docente.setEstado(false);
-			
-			if(DDao.baja(docente))
+			if (getServletContext().getAttribute("Docente") != null)
 			{
-				System.out.println("Baja logica con exito.");
+				docente = (Docente)getServletContext().getAttribute("Docente");
+				docente.setEstado(false);
+				
+				if(DDao.baja(docente))
+				{
+					String log = "Baja logica con exito.";
+					System.out.println(log);
+					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+					rq.include(request, response);
+				}
+				else
+				{
+					String log = "Falló la baja logica.";
+					System.out.println(log);
+					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+					rq.include(request, response);
+				}
 			}
-			else
-			{
-				System.out.println("Falló la baja logica.");
-			}
+			
 			RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
 			rq.include(request, response);
 		}

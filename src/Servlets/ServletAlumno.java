@@ -153,17 +153,13 @@ public class ServletAlumno extends HttpServlet
 			alumno = DDao.buscarAlumno(alumno);
 			if(alumno != null)
 			{
-				request.setAttribute("Alumno", alumno);
+				getServletContext().setAttribute("Alumno", alumno);
 			}
 			else
 			{
-				request.setAttribute("Alumno", new Alumno());
+				getServletContext().setAttribute("Alumno", new Alumno());
 			}
-			/*
-			System.out.println("alumno DNI:"+ alumno.getDni());
-			System.out.println("alumno Leg:"+ alumno.getLegajo());
-			System.out.println("alumno Nombre:"+ alumno.getNombre());
-			*/
+			
 			RequestDispatcher rq=request.getRequestDispatcher("/EliminarAlumno.jsp");
 			rq.include(request, response);
 		}
@@ -171,27 +167,31 @@ public class ServletAlumno extends HttpServlet
 		{
 			System.out.println("btnAlumnoBaja != null");
 			
-			System.out.println("txtDni:"+ request.getParameter("txtDni"));
 			
-			alumno.setLegajo(request.getParameter("txtLegajo"));
-			alumno.setDni(request.getParameter("txtDni"));
-			alumno.setEstado(false);
-			
-			if(DDao.baja(alumno))
+			if (getServletContext().getAttribute("Alumno") != null)
 			{
-				System.out.println("Baja logica con exito.");
+				alumno = (Alumno)getServletContext().getAttribute("Alumno");
+				alumno.setEstado(false);
+				
+				if(DDao.baja(alumno))
+				{
+					String log = "Baja logica con exito.";
+					System.out.println(log);
+					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+					rq.include(request, response);
+				}
+				else
+				{
+					String log = "Falló la baja logica.";
+					System.out.println(log);
+					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+					rq.include(request, response);
+				}
 			}
-			else
-			{
-				System.out.println("Falló la baja logica.");
-			}
-			RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
-			rq.include(request, response);
 		}
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 }
