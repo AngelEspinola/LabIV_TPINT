@@ -101,15 +101,15 @@
                                 <input type="text" class="form-control" id="txtNombre" name="txtNombre" value="<%=application.getAttribute("NombreDoc")%>" required>
                                 <div class="valid-feedback">Completo!</div>
                                 <div class="invalid-feedback"> Por favor completar este dato.</div>
-                            </div>
+                            </div>                        
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="txtFechaNac">Fecha de nacimiento</label>
                                 </div>
-                                <input type="date" class="form-control" id="txtFechaNac" name="txtFechaNac" max="01/01/2002" 
-                                pattern="[1-2][0-9]{3}/[0-1][0-9]/[0-3][0-9]" value="<%=application.getAttribute("NacimientoDoc")!=null?application.getAttribute("NacimientoDoc"):"dd/mm/aaaa"%>" required>
+                                <input type="date" class="form-control" id="txtFechaNac" name="txtFechaNac" max="2002/01/01" 
+                                pattern="[1-2][0-9]{3}/[0-1][0-9]/[0-3][0-9]" value="<%=application.getAttribute("NacimientoDoc")!=null?application.getAttribute("NacimientoDoc"):"aaaa/mm/dd"%>" required>
                                                          
                                 <div class="valid-feedback">Completo!</div>
                                 <div class="invalid-feedback"> Por favor completar este dato.</div>

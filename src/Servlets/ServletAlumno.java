@@ -67,10 +67,6 @@ public class ServletAlumno extends HttpServlet
 		}
 		else if( request.getParameter("ddlProvincia") != null)
 		{
-			if(request.getParameter("txtFechaNac")!=null)
-			{
-				System.out.println("Fecha: "+request.getParameter("txtFechaNac"));
-			}
 			System.out.println("ddlProvincia: "+request.getParameter("ddlProvincia"));
 			if ( getServletContext().getAttribute("Alumno") != null)
 			{
@@ -158,12 +154,10 @@ public class ServletAlumno extends HttpServlet
 			if(alumno != null)
 			{
 				request.setAttribute("Alumno", alumno);
-				getServletContext().setAttribute("Alumno",alumno);
 			}
 			else
 			{
 				request.setAttribute("Alumno", new Alumno());
-				getServletContext().setAttribute("Alumno", new Alumno());
 			}
 			/*
 			System.out.println("alumno DNI:"+ alumno.getDni());
@@ -173,16 +167,15 @@ public class ServletAlumno extends HttpServlet
 			RequestDispatcher rq=request.getRequestDispatcher("/EliminarAlumno.jsp");
 			rq.include(request, response);
 		}
-		else if( request.getParameter("btnConfirmarAlumnoBaja") != null)
+		else if( request.getParameter("btnAlumnoBaja") != null)
 		{
 			System.out.println("btnAlumnoBaja != null");
 			
 			System.out.println("txtDni:"+ request.getParameter("txtDni"));
 			
-			alumno = (Alumno)getServletContext().getAttribute("Alumno");
-			//alumno.setLegajo(request.getParameter("txtLegajo"));
-			//alumno.setDni(request.getParameter("txtDni"));
-			alumno.setEstado(0);
+			alumno.setLegajo(request.getParameter("txtLegajo"));
+			alumno.setDni(request.getParameter("txtDni"));
+			alumno.setEstado(false);
 			
 			if(DDao.baja(alumno))
 			{

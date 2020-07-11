@@ -120,7 +120,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
 		try 
 		{
 			statement = conexion.prepareStatement(baja);
-			statement.setInt(1, alumnoDeBaja.getEstado());
+			statement.setBoolean(1, alumnoDeBaja.getEstado());
 			statement.setString(2, alumnoDeBaja.getLegajo());
 			statement.setString(3, alumnoDeBaja.getDni());
 			if(statement.executeUpdate() > 0)

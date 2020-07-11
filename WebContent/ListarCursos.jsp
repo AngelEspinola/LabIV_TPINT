@@ -1,7 +1,3 @@
-<%@page import="Entidades.Materia"%>
-<%@page import="Entidades.Curso"%>
-<%@page import="Entidades.Docente"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,17 +22,7 @@
 
     </head>
     <body class="fondo">
-        
-<jsp:include page="Menu.jsp"></jsp:include>
-
-<%
-	ArrayList<Curso> cursos = null;
-	if (session.getAttribute("Cursos") != null)
-	{
-		cursos = (ArrayList<Curso>)session.getAttribute("Cursos");
-	}
-	
-%>
+   
         <div class="row">
             <br>
         </div>
@@ -57,22 +43,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <%
-                                if (cursos != null)
-                            	{
-                                	for(Curso c : cursos)
-                                	{
-                                %>
-                                		 <tr>
-			                                <td><%=c.getMateria().getNombre()%></td>
-			                                <td><%=c.getAño()%></td>
-			                                <td><%=c.getCuatrimestre() == 1 ? "Primer Cuatrimestre" : "Segundo Cuatrimestre"%></td>
-			                                <td><%=c.getDocente().getApellido() + ", " + c.getDocente().getNombre()%></td>
-                            			</tr>
-                                <%
-                                	}
-                            	}
-                            	%>
+                            <tr>
+                                <td>Programacion II</td>
+                                <td>2018</td>
+                                <td>Segundo Cuatrimestre</td>
+                                <td>Tamara Herrera</td>
+                            </tr>
+                            <tr>
+                                <td>Estadistica</td>
+                                <td>2017</td>
+                                <td>Primer cuatrimestre</td>
+                                <td>Maximiliano Sar Fernandez</td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             

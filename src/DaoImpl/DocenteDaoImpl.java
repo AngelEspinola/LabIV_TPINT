@@ -122,7 +122,7 @@ public class DocenteDaoImpl implements DocenteDao{
 		try 
 		{
 			statement = conexion.prepareStatement(baja);
-			statement.setInt(1, docenteDeBaja.getEstado());
+			statement.setBoolean(1, docenteDeBaja.getEstado());
 			statement.setString(2, docenteDeBaja.getLegajo());
 			statement.setString(3, docenteDeBaja.getDni());
 			if(statement.executeUpdate() > 0)

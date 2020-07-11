@@ -100,7 +100,7 @@ public class ServletDocente extends HttpServlet {
 			
 			docente.setLegajo(request.getParameter("txtLegajo"));
 			docente.setDni(request.getParameter("txtDni"));
-			docente.setEstado(0);
+			docente.setEstado(false);
 			
 			if(DDao.baja(docente))
 			{
@@ -171,10 +171,6 @@ public class ServletDocente extends HttpServlet {
 			if ( getServletContext().getAttribute("Docente") != null)
 			{
 				docente = (Docente)getServletContext().getAttribute("Docente");
-			}
-			if(request.getParameter("txtFechaNac")!=null)
-			{
-				System.out.println("Fecha: "+request.getParameter("txtFechaNac"));
 			}
 			provincias = new ArrayList<Provincia>();
 			provincias = PDao.readAll();

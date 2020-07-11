@@ -103,7 +103,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="txtProvincia">Provicia</label>
-                        <label class="form-control disabled" id="ddlProvincia" name="ddlProvincia"> <%=d!=null?d.getProvincia().getNombre():""%> </label>
+                        <label class="form-control disabled" id="ddlProvincia" name="ddlProvincia"> <%=d != null ? d.getProvincia().getNombre() : ""  %> </label>
                     </div>
                 </div>
 
@@ -141,8 +141,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <!--<button type="button" class="btn btn-danger" type="submit" name="btnConfirmarDocenteBaja" value="aceptar" >Confirmar</button>-->
-          <a class="btn btn-danger" href="ServletDocente?btnConfirmarDocenteBaja=1">Confirmar</a>
+          <button type="button" class="btn btn-danger" type="submit" name="btnConfirmarDocenteBaja" value="aceptar" >Confirmar</button>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ public class Integrante {
 	private Provincia 	Provincia;
 	private String 		Email;
 	private String 		Telefono;
-	private int 	Estado;
+	private boolean 	Estado;
 	
 	//private static int cont = 1;
 	
@@ -31,7 +31,7 @@ public class Integrante {
 		Provincia 	= provincia;
 		Email       = email;
 		Telefono 	= telefono;
-		Estado 		= 1;
+		Estado 		= true;
 	}
  
 	public Integrante ()
@@ -45,7 +45,7 @@ public class Integrante {
 		Numero 		= "";
 		Email       = "";
 		Telefono 	= "";
-		this.Estado = 1;
+		this.Estado = true;
 	}
 	public int getID() {
 		return Id;
@@ -140,11 +140,11 @@ public class Integrante {
 		Telefono = telefono;
 	}
 	
-	public int getEstado() {
+	public boolean getEstado() {
 		return Estado;
 	}
 	
-	public void setEstado(int estado) {
+	public void setEstado(boolean estado) {
 		Estado = estado;
 	}
 
