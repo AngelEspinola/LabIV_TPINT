@@ -28,6 +28,7 @@ public class ServletCurso extends HttpServlet {
 		AlumnoDaoImpl alumnoDao = new AlumnoDaoImpl();
 		MateriaDaoImpl materiaDao = new MateriaDaoImpl();
 		CursoDaoImpl cursoDao = new CursoDaoImpl();
+		AlumnoNotasDaoImpl cursoAlumno = new AlumnoNotasDaoImpl();
 		
 		String redirectJSP = "";
 		if(request.getParameter("Param") != null)
@@ -255,7 +256,28 @@ public class ServletCurso extends HttpServlet {
         	
         		redirectJSP = "/InscripcionCurso.jsp";    
         }
-        
+        if(request.getParameter("btnInscribirACurso") != null)
+		{
+        	System.out.println("Accion boton 'Inscribir curso'");
+        	ArrayList <Alumno> alumnos = (ArrayList<Alumno>)request.getSession().getAttribute("Alumnos");
+			int idCurso = Integer.parseInt(request.getParameter("txtID").toString());
+			int idx = 0;
+			for(Alumno a : alumnos)
+			{
+				
+				String cbxName = "cbx" + idx;
+        		if(request.getParameter(cbxName) != null)
+        		{
+        			if(!cursoAlumno.insert(idCurso,a.getID()))
+        			{
+        				System.out.println("Falló la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
+        			}        			
+        		}
+        		idx++;
+			}
+
+			redirectJSP = "/InscripcionCurso.jsp";
+		}
         if(request.getParameter("btnEliminarCurso") != null)
         {
         	System.out.println("Accion boton 'Baja curso'");

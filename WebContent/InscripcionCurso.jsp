@@ -77,7 +77,7 @@
                 <h5 class="card-title">Inscripcion a curso</h5>
             </div>
             <div class=" card-body">
-            <form class="needs-validation" name="CalificarCurso" action="ServletCurso" method="get" novalidate>
+            		<form class="needs-validation" name="CalificarCurso" action="ServletCurso" method="get" novalidate>
                 <div class="form-row">
                         <div class="col-md-3 mb-3">
                             <div class="input-group-prepend">
@@ -128,10 +128,12 @@
                             <button class="btn btn-info align-items-end" name="btnBurscarCurso_Inscripcion" type="submit">Buscar</button>
                         </div>
                     </div>
+                        </form>
+                    <form class="needs-validation" name="CalificarCurso" action="ServletCurso" method="get" novalidate>
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="txtID">ID</label>
-                            <label class="form-control disabled" id="lblID"><%=c!=null?c.getID():""%></label>
+                            <input class="form-control disabled" type="text" value="<%=c!=null?c.getID():""%>" name="txtID" id="txtID">
                         </div>
                     </div>
                     
@@ -160,6 +162,7 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
+                        	<th></th>
                             <th>Legajo</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
@@ -169,20 +172,23 @@
                     <%
                   	if (alumnos != null)
               		{
+                  		int idx = 0;
                   		for(Alumno a : alumnos)
                   		{
                		%>
-	                    <tr>
+	                    <tr>	                    
+	                       <td style="width: 15px"><input  type="checkbox" name="cbx<%=idx%>" /></td>
 	                       <td><%=a.getLegajo()	%></td>
 	                       <td><%=a.getNombre()	%></td>
 	                       <td><%=a.getApellido()%></td>
                		<%
+                  			idx ++;
               			}
               		}
                     %>
                     </tbody>
                 </table>
-                <button class="btn btn-success" type="submit" name="btnCalificarCurso" value="aceptar">Guardar todo</button>
+                <button class="btn btn-success" type="submit" name="btnInscribirACurso" value="aceptar">Inscribir</button>
                 </form>
             </div>
             <div class=" card-footer"></div> 
@@ -227,7 +233,7 @@
     
     <!--Validaciones en formulario-->
     <script>
-    document.getElementById('lblID').readOnly = true;
+    document.getElementById('txtID').readOnly = true;
     document.getElementById('lblMateria').readOnly = true;
     document.getElementById('lblDocente').readOnly = true;
     document.getElementById('lblAnio').readOnly = true;
