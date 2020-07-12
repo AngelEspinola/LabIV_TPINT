@@ -5,19 +5,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="es-ES">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--Referencia en linea-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!--Referencia local-->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <title>TP Final - Inicio</title>
+    <!--Referencia en linea-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--Referencia local-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>TP Final - Inicio</title>
 
-        <style>
-            .fondo{ background-color: #E8EAF6; }
-            .formulario{ background-color: #ffffff; }
-        </style>
+    <style>
+        .fondo{ background-color: #E8EAF6; }
+        .formulario{ background-color: #ffffff; }
+    </style>
 </head>
 <body class="fondo">
 <jsp:include page="Menu.jsp"></jsp:include>
@@ -54,7 +54,7 @@
                 <h5 class="card-title">Agregar alumno</h5>
             </div>
             <div class=" card-body">
-                <form class="needs-validation" name="altaAlumno" action="ServletAlumno?Alta=alta" method="get" novalidate>
+                <form class="needs-validation" name="altaAlumno" action="ServletAlumno?Alta=alta" method="get">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <div class="input-group">
@@ -124,7 +124,7 @@
                         <div class="col-md-3 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="txtNumero">Número</label>
+                                    <label class="input-group-text" for="txtNumero">Nï¿½mero</label>
                                 </div>
                                 <input type="text" class="form-control" id="txtNumero" name="txtNumero" value="<%=a.getNumero()%>" required>
                                 <div class="valid-feedback">Completo!</div>
