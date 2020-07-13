@@ -24,6 +24,8 @@ public class ServletCurso extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ServletCurso - Servlet doGet");
+		Usuario usuario = (Usuario)request.getSession().getAttribute("Login");
+		
 		DocenteDaoImpl docenteDao = new DocenteDaoImpl();
 		AlumnoDaoImpl alumnoDao = new AlumnoDaoImpl();
 		MateriaDaoImpl materiaDao = new MateriaDaoImpl();
@@ -51,9 +53,19 @@ public class ServletCurso extends HttpServlet {
 			request.getSession().setAttribute("Alumnos", ListAlumno);
 			
 			cursoDao = new CursoDaoImpl();
-			ArrayList<Curso> ListCurso = cursoDao.readAll();
-			System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD");
-			request.getSession().setAttribute("Cursos", ListCurso);
+			ArrayList<Curso> ListCurso;
+			if(usuario.getRol() == 1)
+			{
+				ListCurso = cursoDao.readAll();
+				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD");
+				request.getSession().setAttribute("Cursos", ListCurso);				
+			}
+			else
+			{
+				ListCurso = cursoDao.readAll(usuario.getID_docente());
+				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD");
+				request.getSession().setAttribute("Cursos", ListCurso);				
+			}
 			
 			String param = request.getParameter("Param");
 			if(param.equals("altaCurso"))

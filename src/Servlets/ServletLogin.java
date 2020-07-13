@@ -64,8 +64,11 @@ public class ServletLogin extends HttpServlet {
 				//System.out.println("txtDni:"+ request.getParameter("txtDni"))
 				//if(login.getName() == request.getParameter("txtName") && login.getPass() == request.getParameter("txtPass"))
 					request.getSession().setAttribute("Login",login);
-					user = DDAO.read(login.getDni());
-					request.getSession().setAttribute("User", user);				
+					if(login.getRol() == 2)
+					{
+						user = DDAO.read(login.getDni());
+						request.getSession().setAttribute("User", user);										
+					}
 					RequestDispatcher rq = request.getRequestDispatcher("/Main.jsp");
 					rq.include(request, response);
 				
