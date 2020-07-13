@@ -49,6 +49,7 @@ public class ServletLogin extends HttpServlet {
 		DocenteDaoImpl DDAO = new DocenteDaoImpl();
 		if( request.getParameter("btnLogin") != null)
 		{
+			request.setAttribute("Error", null);
 			System.out.println("btnLogin != null");
 			System.out.println("txtName:"+ request.getParameter("txtName"));
 			System.out.println("txtPass:"+ request.getParameter("txtPass"));
@@ -64,8 +65,11 @@ public class ServletLogin extends HttpServlet {
 				//System.out.println("txtDni:"+ request.getParameter("txtDni"))
 				//if(login.getName() == request.getParameter("txtName") && login.getPass() == request.getParameter("txtPass"))
 					request.getSession().setAttribute("Login",login);
-					user = DDAO.read(login.getDni());
-					request.getSession().setAttribute("User", user);				
+					if(login.getRol() == 2)
+					{
+						user = DDAO.read(login.getDni());
+						request.getSession().setAttribute("User", user);										
+					}
 					RequestDispatcher rq = request.getRequestDispatcher("/Main.jsp");
 					rq.include(request, response);
 				
@@ -74,7 +78,7 @@ public class ServletLogin extends HttpServlet {
 			else
 			{
 				String log = "Usuario o contraseña invalidos";
-				request.setAttribute("Log",log);
+				request.setAttribute("Error",log);
 				RequestDispatcher rq = request.getRequestDispatcher("/Login.jsp");
 				rq.include(request, response);
 			}

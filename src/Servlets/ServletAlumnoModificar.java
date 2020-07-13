@@ -76,38 +76,53 @@ public class ServletAlumnoModificar extends HttpServlet {
 				}
 				else if( request.getParameter("btnBuscarAlumnoModificar") != null)
 				{
-					System.out.println("btnBuscarAlumnoModificar != null");
-					System.out.println("txtLegajo:"+ request.getParameter("txtLegajo"));
-					System.out.println("txtDni:"+ request.getParameter("txtDni"));
-					alumno.setLegajo(request.getParameter("txtLegajo"));
-					alumno.setDni(request.getParameter("txtDni"));
-					
-					alumno = DDao.buscarAlumno(alumno);
-					if(alumno !=null)
-					{
-						/*
-				System.out.println("AlumnoLegajo:"+ alumno.getLegajo());
-				System.out.println("txtLegajo:"+ Integer.parseInt(request.getParameter("txtLegajo")));
-				System.out.println("AlumnoDni:"+ alumno.getDni());
-				System.out.println("txtDni:"+ request.getParameter("txtDni"))*/
-						if(alumno.getDni() == request.getParameter("txtDni") && alumno.getLegajo() == request.getParameter("txtLegajo"))
+					try
+					{	
+						System.out.println("btnBuscarAlumnoModificar != null");
+						System.out.println("txtLegajo:"+ request.getParameter("txtLegajo"));
+						System.out.println("txtDni:"+ request.getParameter("txtDni"));
+						alumno.setLegajo(request.getParameter("txtLegajo"));
+						alumno.setDni(request.getParameter("txtDni"));
+						
+						alumno = DDao.buscarAlumno(alumno);
+						if(alumno !=null)
 						{
-							getServletContext().setAttribute("LegajoDoc",request.getParameter("txtLegajo"));
-							getServletContext().setAttribute("DNIDoc",request.getParameter("txtDni"));
-							getServletContext().setAttribute("DNIOrigin", request.getParameter("txtDni"));
+							/*
+							System.out.println("AlumnoLegajo:"+ alumno.getLegajo());
+							System.out.println("txtLegajo:"+ Integer.parseInt(request.getParameter("txtLegajo")));
+							System.out.println("AlumnoDni:"+ alumno.getDni());
+							System.out.println("txtDni:"+ request.getParameter("txtDni"))*/
+							if(alumno.getDni() == request.getParameter("txtDni") && alumno.getLegajo() == request.getParameter("txtLegajo"))
+							{
+								getServletContext().setAttribute("LegajoDoc",request.getParameter("txtLegajo"));
+								getServletContext().setAttribute("DNIDoc",request.getParameter("txtDni"));
+								getServletContext().setAttribute("DNIOrigin", request.getParameter("txtDni"));
+							}
+							getServletContext().setAttribute("DNIOrigin", alumno.getDni());
+							
+							provincias  = new ArrayList<Provincia>();
+							localidades = new ArrayList<Localidad>();
+							provincias  = PDao.readAll();
+							localidades = LDao.readAll();
+							getServletContext().setAttribute("Provincias", provincias);
+							getServletContext().setAttribute("Localidades", localidades);
+							getServletContext().setAttribute("Provincia", alumno.getProvincia());
+							getServletContext().setAttribute("Localidad", alumno.getLocalidad());
+							
+							getServletContext().setAttribute("Alumno", alumno);				
 						}
-						getServletContext().setAttribute("DNIOrigin", alumno.getDni());
-						
-						provincias  = new ArrayList<Provincia>();
-						localidades = new ArrayList<Localidad>();
-						provincias  = PDao.readAll();
-						localidades = LDao.readAll();
-						getServletContext().setAttribute("Provincias", provincias);
-						getServletContext().setAttribute("Localidades", localidades);
-						getServletContext().setAttribute("Provincia", alumno.getProvincia());
-						getServletContext().setAttribute("Localidad", alumno.getLocalidad());
-						
-						getServletContext().setAttribute("Alumno", alumno);				
+						else
+						{
+							String error = "No se encontro el alumno en nuestros registros. Por favor revise los datos e intente nuevamente.";
+							System.out.println(error);
+							request.setAttribute("Error", error);
+						}
+					}
+					catch(Exception e)
+					{
+						String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+						System.out.println(error);
+						request.setAttribute("Error", error);
 					}
 					RequestDispatcher rq=request.getRequestDispatcher("/ModificarAlumno.jsp");
 					rq.include(request, response);
@@ -157,37 +172,48 @@ public class ServletAlumnoModificar extends HttpServlet {
 				}
 				else if( request.getParameter("btnModificarAlumno") != null)
 				{
-					Alumno aux = new Alumno();
-					aux = (Alumno)getServletContext().getAttribute("Alumno");
-					System.out.println("btnModificarAlumno != null");
-					
-					System.out.println("txtDni:"+ request.getParameter("txtDniNew"));
-					System.out.println("ddlProvincia:"+ request.getParameter("ddlProvinciaModificar"));
-					System.out.println("ddlLocalidad:"+ request.getParameter("ddlLocalidad"));
-					
-					alumno.setLegajo( request.getParameter("txtLegajoNew") !=null?request.getParameter("txtLegajoNew"):aux.getLegajo());
-					alumno.setDni(request.getParameter("txtDniNew") !=null? request.getParameter("txtDniNew"):aux.getDni());
-					alumno.setNombre(request.getParameter("txtNombre") !=null?request.getParameter("txtNombre"):aux.getNombre());
-					alumno.setApellido(request.getParameter("txtApellido") !=null?request.getParameter("txtApellido"):aux.getApellido());
-					alumno.setNacimiento(request.getParameter("txtFechaNac") !=null?request.getParameter("txtFechaNac"):aux.getNacimiento());
-					alumno.setCalle(request.getParameter("txtCalle") !=null?request.getParameter("txtCalle"):aux.getCalle());
-					alumno.setNumero(request.getParameter("txtNumero") !=null?request.getParameter("txtNumero"):aux.getNumero());
-					localidad = request.getParameter("ddlLocalidad") !=null?new Localidad(Integer.parseInt(request.getParameter("ddlLocalidad"))):new Localidad(aux.getLocalidad().getId());
-					provincia = request.getParameter("ddlProvinciaModificar") !=null?new Provincia(Integer.parseInt(request.getParameter("ddlProvinciaModificar"))):new Provincia(aux.getProvincia().getId());
-					alumno.setLocalidad(localidad);
-					alumno.setProvincia(provincia);
-					alumno.setEmail(request.getParameter("txtEmail") !=null?request.getParameter("txtEmail"):aux.getEmail());
-					alumno.setTelefono(request.getParameter("txtTelefono") !=null?request.getParameter("txtTelefono"):aux.getTelefono());
-					String dniOrigin = getServletContext().getAttribute("DNIOrigin").toString();
-					if(DDao.modify(alumno, dniOrigin))
+					try
 					{
-						System.out.println("Modificación con éxito.");
+						Alumno aux = new Alumno();
+						aux = (Alumno)getServletContext().getAttribute("Alumno");
+						System.out.println("btnModificarAlumno != null");
+						
+						System.out.println("txtDni:"+ request.getParameter("txtDniNew"));
+						System.out.println("ddlProvincia:"+ request.getParameter("ddlProvinciaModificar"));
+						System.out.println("ddlLocalidad:"+ request.getParameter("ddlLocalidad"));
+						
+						alumno.setLegajo( request.getParameter("txtLegajoNew") !=null?request.getParameter("txtLegajoNew"):aux.getLegajo());
+						alumno.setDni(request.getParameter("txtDniNew") !=null? request.getParameter("txtDniNew"):aux.getDni());
+						alumno.setNombre(request.getParameter("txtNombre") !=null?request.getParameter("txtNombre"):aux.getNombre());
+						alumno.setApellido(request.getParameter("txtApellido") !=null?request.getParameter("txtApellido"):aux.getApellido());
+						alumno.setNacimiento(request.getParameter("txtFechaNac") !=null?request.getParameter("txtFechaNac"):aux.getNacimiento());
+						alumno.setCalle(request.getParameter("txtCalle") !=null?request.getParameter("txtCalle"):aux.getCalle());
+						alumno.setNumero(request.getParameter("txtNumero") !=null?request.getParameter("txtNumero"):aux.getNumero());
+						localidad = request.getParameter("ddlLocalidad") !=null?new Localidad(Integer.parseInt(request.getParameter("ddlLocalidad"))):new Localidad(aux.getLocalidad().getId());
+						provincia = request.getParameter("ddlProvinciaModificar") !=null?new Provincia(Integer.parseInt(request.getParameter("ddlProvinciaModificar"))):new Provincia(aux.getProvincia().getId());
+						alumno.setLocalidad(localidad);
+						alumno.setProvincia(provincia);
+						alumno.setEmail(request.getParameter("txtEmail") !=null?request.getParameter("txtEmail"):aux.getEmail());
+						alumno.setTelefono(request.getParameter("txtTelefono") !=null?request.getParameter("txtTelefono"):aux.getTelefono());
+						String dniOrigin = getServletContext().getAttribute("DNIOrigin").toString();
+						if(DDao.modify(alumno, dniOrigin))
+						{
+							System.out.println("Modificación con éxito.");
+						}
+						else
+						{
+							String error = "Error al modificar alumno en nuestros registros. Por favor revise los datos e intente nuevamente.";
+							System.out.println(error);
+							request.setAttribute("Error", error);
+						}
 					}
-					else
+					catch(Exception e)
 					{
-						System.out.println("Falló la modificación.");
+						String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+						System.out.println(error);
+						request.setAttribute("Error", error);
 					}
-					RequestDispatcher rq=request.getRequestDispatcher("Main.jsp");
+					RequestDispatcher rq=request.getRequestDispatcher("ModificarAlumno.jsp");
 					rq.include(request, response);
 				}
 				else

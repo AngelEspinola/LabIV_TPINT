@@ -17,6 +17,7 @@ public class CursoDaoImpl implements CursoDao{
 	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, año=?, materia=? Where ID=?";
 	private static final String baja   = "UPDATE bdTPInt.cursos SET Baja=1 WHERE ID=?";
 	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE Baja=0";
+	private static final String readallforID = "SELECT * FROM bdTPInt.cursos WHERE Baja=0 AND docente=?";
 	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND año=? AND baja=0";
 	
 	public boolean insert(Curso curso) {
@@ -129,6 +130,32 @@ public class CursoDaoImpl implements CursoDao{
 		try
 		{
 			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				Curso nuevoCurso = new Curso();
+				if(getCurso(resultSet, nuevoCurso))
+				{
+					cursos.add(nuevoCurso);
+				}
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return cursos;
+	}
+	@Override
+	public ArrayList<Curso> readAll(int ID) {
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Curso> cursos = new ArrayList<Curso>();
+		Conexion conexion = Conexion.getConexion();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readallforID);
+			statement.setInt(1, ID);
 			resultSet = statement.executeQuery();
 			while(resultSet.next())
 			{

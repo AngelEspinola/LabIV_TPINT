@@ -11,6 +11,9 @@
         <title>TP Final - Inicio</title>
 </head>
 <body>
+<%
+	String error = (String)request.getAttribute("Error");
+%>
 	<form class="form needs-validation" name="login" action="ServletLogin?Param=1" method="post">
             
             <div class="row">
@@ -66,6 +69,12 @@
                 });
               }, false);
             })();
+            
+            var error = "<%=error%>";
+            if(error != "null")
+           	{
+          		alert(error);
+           	}
         </script>
 </body>
 <footer>

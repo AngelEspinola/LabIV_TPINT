@@ -20,6 +20,7 @@
 </head>
 <body class="fondo">
 <%
+	String error = (String)request.getAttribute("Error");
 
 	ArrayList<Materia> materias = null;
   	if (session.getAttribute("Materias") != null)
@@ -63,7 +64,6 @@
 <div class="row">
         <br>
     </div>
-        <form class="" method="get" action="ServletCurso" novalidate>
         
     <div class="row">
         <div class=" col-1"></div>
@@ -72,6 +72,7 @@
                 <h5 class="card-title">Modificar curso</h5>
                 <input type="hidden" class="form-control" id="txtMateria" name="modificarCurso" value="Matematicas" required>    
             </div>
+        	<form class="needs-validation" method="get" action="ServletCurso" novalidate>
             <div class=" card-body">
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
@@ -120,10 +121,12 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
                         </div>
                         <div class="col-md-3 mb-3 align-items-end input-group">
-                            <button class="btn btn-info align-items-end" name="btnBurscarCurso" type="submit">Buscar</button>
+                            <button class="btn btn-info align-items-end" name="btnBurscarCurso_ModificarCurso" type="submit">Buscar</button>
                         </div>
                     </div>
             </div>
+            </form>
+            <form class="needs-validation" method="get" action="ServletCurso" novalidate>
             <br>
             <div class=" card-footer">
             		<div class="form-row">
@@ -265,7 +268,16 @@
     $('#ddlCuatrimestre').val(<%=cuatrimestre%>);
     $('#ddlProfesor').val(<%=docente%>);
     $('#ddlMateria').val(<%=materia%>);
+	
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
+    
 
+    document.getElementById('txtID').readOnly = true;
+    
     </script>
 </body>
 <footer>

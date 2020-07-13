@@ -21,6 +21,8 @@
 <body class="fondo">
 
 <%
+	String error = (String)request.getAttribute("Error");
+
 	ArrayList<Materia> materias = null;
 		if (session.getAttribute("Materias") != null)
 	{
@@ -64,13 +66,13 @@
         <br>
     </div>
     
-    <form class="" method="get" action="ServletCurso" novalidate>
     <div class="row">
         <div class=" col-1"></div>
         <div class="col-10 card formulario">
             <div class="card-header text-center">
                 <h5 class="card-title">Eliminar curso</h5>
             </div>
+    		<form class="needs-validation" method="get" action="ServletCurso" novalidate>
             <div class=" card-body">
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
@@ -119,11 +121,13 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
                         </div>
                         <div class="col-md-3 mb-3 align-items-end input-group">
-                            <button class="btn btn-info align-items-end" name="btnBurscarCurso2" type="submit">Buscar</button>
+                            <button class="btn btn-info align-items-end" name="btnBurscarCurso_EliminarCurso" type="submit">Buscar</button>
                         </div>
                     </div>
                 
             </div>
+            </form>
+            <form class="needs-validation" method="get" action="ServletCurso" novalidate>
             <div class=" card-footer">
 					 <div class="form-row">
                         <div class="col-md-6 mb-3">
@@ -229,7 +233,11 @@
         }, false);
         })();
         
-
+        var error = "<%=error%>";
+        if(error != "null")
+       	{
+      		alert(error);
+       	}
         </script>
     </body>
     <footer>

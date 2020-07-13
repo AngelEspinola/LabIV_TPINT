@@ -22,6 +22,8 @@
 <body class="fondo">
 <jsp:include page="Menu.jsp"></jsp:include>
 <%
+	String error = (String)request.getAttribute("Error");
+	
 	Alumno a = null;
 	Provincia provincia = null;
 	Localidad localidad = null; 
@@ -251,6 +253,13 @@
         });
     }, false);
     })();
+    
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
+    
     
     </script>
 </body>

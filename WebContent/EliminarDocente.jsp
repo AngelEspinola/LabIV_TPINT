@@ -21,6 +21,8 @@
     <br>
 </div>
 <%
+	String error = (String)request.getAttribute("Error");
+
   	Docente d = null;
   	if (application.getAttribute("Docente") != null)
 	{
@@ -165,6 +167,12 @@
         });
     }, false);
     })();
+    
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
     </script>
 </body>
 <footer>

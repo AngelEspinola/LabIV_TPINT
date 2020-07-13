@@ -36,12 +36,12 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	
 	private Usuario getUsuario(ResultSet resultSet) throws SQLException
 	{
-		//int 	   id = resultSet.getInt("ID");
+		int 	   ID = resultSet.getInt("ID");
 		int idDocente = resultSet.getInt("id_docente");
 		String usuario= resultSet.getString("usuario");
 		String clave  = resultSet.getString("clave");
 		//String estado = resultSet.getString("estado");
 		int    idRol  = resultSet.getInt("id_rol");
-		return new Usuario(idDocente,usuario,clave,clave,idRol);
+		return new Usuario(ID,idDocente,usuario,clave,clave,idRol);
 	}	
 }

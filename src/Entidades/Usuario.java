@@ -2,14 +2,16 @@ package Entidades;
 
 public class Usuario {
 	private int ID;
+	private int ID_docente;
 	private String Name;
 	private String Pass;
 	private String Dni;
 	private int Rol;
 	
-	public Usuario(int id, String name, String pass, String dni, int rol) {
+	public Usuario(int id, int id_docente, String name, String pass, String dni, int rol) {
 		super();
 		ID = id;
+		ID_docente = id_docente;
 		Name = name;
 		Pass = pass;
 		Dni = dni;
@@ -61,5 +63,13 @@ public class Usuario {
 	}
 	public String getRolDescripcion() {
 		return getRol()==1?"Administrador":"Docente";
+	}
+
+	public int getID_docente() {
+		return ID_docente;
+	}
+
+	public void setID_docente(int iD_docente) {
+		ID_docente = iD_docente;
 	}
 }
