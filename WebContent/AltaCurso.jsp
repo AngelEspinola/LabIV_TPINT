@@ -19,6 +19,8 @@
 </head>
 <body class="fondo">
 <%
+	String error = (String)request.getAttribute("Error");
+
 	ArrayList<Materia> materias = null;
 		if (session.getAttribute("Materias") != null)
 	{
@@ -166,6 +168,13 @@
         });
     }, false);
     })();
+    
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
+    
     </script>
 </body>
 <footer>

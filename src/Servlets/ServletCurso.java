@@ -1,5 +1,6 @@
 package Servlets;
 
+import java.io.Console;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class ServletCurso extends HttpServlet {
 			ArrayList<Docente> ListDocente = docenteDao.readAll();
 			System.out.println("Se trajeron " + ListDocente.size() + " docentes de la BBDD");
 			request.getSession().setAttribute("Docentes", ListDocente);
+			
 			
 			//Cargo los alumnos
 			ArrayList<Alumno> ListAlumno = alumnoDao.readAll();
@@ -100,95 +102,116 @@ public class ServletCurso extends HttpServlet {
 		{
         	System.out.println("Accion boton 'Agregar curso'");
 			Curso curso = new Curso();
-			curso.setDocente(docenteDao.readID(Integer.parseInt(request.getParameter("ddlProfesor"))));
-			//linea
-			curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
-			curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
-			curso.setAño(Integer.parseInt(request.getParameter("txtAnio")));
+			try
+			{
+				curso.setDocente(docenteDao.readID(Integer.parseInt(request.getParameter("ddlProfesor"))));
+				//linea
+				curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
+				curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
+				curso.setAño(Integer.parseInt(request.getParameter("txtAnio")));
+				
+				if(cursoDao.insert(curso))
+				{
+					System.out.println("Curso ingresado con exito!");
+				}
+				else
+				{
+					String error = "Ocurrio un error al crear el curso. Por favor revise los valores e intente nuevamente";
+					System.out.println(error);
+					request.setAttribute("Error", error);
+				}
+			}
+			catch (Exception e)
+			{
+				String error = "Whoops! Algo fallo al intentar generar el curso. Por favor intente nuevamente";
+				System.out.println(error);
+				request.setAttribute("Error", error);
+			}
 
-			if(cursoDao.insert(curso))
-			{
-				System.out.println("Curso ingresado con exito!");
-			}
-			else
-			{
-				System.out.println("Falló el ingreso.");
-			}
 			redirectJSP = "/AltaCurso.jsp";
 		}
         
         if(request.getParameter("btnGuardarCurso") != null)
 		{
-        	System.out.println("Accion boton 'Guardar curso' (Modificar curso)");
-			Curso curso = new Curso();
-			curso.setID(Integer.parseInt(request.getParameter("txtID")));
-			curso.setDocente(docenteDao.readID(Integer.parseInt(request.getParameter("ddlProfesor"))));
-			//linea
-			curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
-			curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
-
-        	String añoNuevo = request.getParameter("txtAnioNuevo");
-			curso.setAño(Integer.parseInt(añoNuevo));
-
-			if(cursoDao.modify(curso))
-			{
-				System.out.println("Curso ingresado con exito!");
-			}
-			else
-			{
-				System.out.println("Falló el ingreso.");
-			}
+        	try
+        	{        		
+        		System.out.println("Accion boton 'Guardar curso' (Modificar curso)");
+        		Curso curso = new Curso();
+        		curso.setID(Integer.parseInt(request.getParameter("txtID")));
+        		curso.setDocente(docenteDao.readID(Integer.parseInt(request.getParameter("ddlProfesor"))));
+        		//linea
+        		curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
+        		curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
+        		
+        		String añoNuevo = request.getParameter("txtAnioNuevo");
+        		curso.setAño(Integer.parseInt(añoNuevo));
+        		
+        		if(cursoDao.modify(curso))
+        		{
+        			System.out.println("Curso ingresado con exito!");
+        		}
+        		else
+        		{
+        			String error = "Error al modificar curso, por favor revise los campos e intente nuevamente.";
+        			System.out.println(error);
+        			request.setAttribute("Error", error);
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		String error = "Error al modificar curso, por favor revise los campos e intente nuevamente.";
+    			System.out.println(error);
+    			request.setAttribute("Error", error);
+        	}
 			redirectJSP = "/ModificarCurso.jsp";
 		}
         
-        if(request.getParameter("btnBurscarCurso") != null)
+        if(request.getParameter("btnBurscarCurso_ModificarCurso") != null)
         {
-        	System.out.println("btnBuscarCurso");
-        	//String docente = "2";
-        	String cuatrimestre = request.getParameter("txtCuatrimestre");
-        	String año = request.getParameter("txtAnio");
-        	String materia = request.getParameter("txtMateria");
-        	
-        	Curso curso = new Curso();
-        	curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
-        	//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
-        	curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        	curso.setAño(Integer.parseInt(año));
-        	
-        	Boolean result = false;
-        	try {
+        	try
+        	{
+        		System.out.println("btnBurscarCurso_ModificarCurso");
+        		//String docente = "2";
+        		String cuatrimestre = request.getParameter("txtCuatrimestre");
+        		String año = request.getParameter("txtAnio");
+        		String materia = request.getParameter("txtMateria");
+        		
+        		Curso curso = new Curso();
+        		curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
+        		//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
+        		curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
+        		curso.setAño(Integer.parseInt(año));
+        		
+        		Boolean result = false;
         		result = cursoDao.read(curso);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		
-        	if(result == true)
-        	{
-        		request.setAttribute("Result_ID", curso.getID());
-        		//request.setAttribute("Result_Docente", curso.getDocente().getApellido());
-        		request.setAttribute("Result_Materia", curso.getMateria().getNombre());
-        		request.setAttribute("Result_Cuatrimestre", curso.getCuatrimestre());
-        		request.setAttribute("Result_Año", curso.getAño());
         		
-        		
-        		if(request.getParameter("btnBurscarCurso") != null)
+        		if(result == true)
         		{
+        			request.setAttribute("Result_ID", curso.getID());
+        			request.setAttribute("Result_Cuatrimestre", curso.getCuatrimestre());
+        			request.setAttribute("Result_Año", curso.getAño());
         			request.setAttribute("Result_Docente", curso.getDocente().getID());
-        			System.out.println("Docente encontrado: " + curso.getDocente().getID());
         			request.setAttribute("Result_Materia", curso.getMateria().getId());
-        			System.out.println("Materia encontrado: " + curso.getMateria().getId());
-        		}        		
+        		}
+        		else
+        		{
+        			String error = "No se encontro curso en los registros, por favor revise los datos e intente nuevamente.";
+        			request.setAttribute("Error", error);
+        			System.out.println(error);
+        		}
+        		
         	}
-        	else
+        	catch(Exception e)
         	{
-        		System.out.println("No se encontro curso en BBDD");
+        		String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+    			request.setAttribute("Error", error);
+    			System.out.println(error);
         	}
         	
         		redirectJSP = "/ModificarCurso.jsp";    
         }
 
-        if(request.getParameter("btnBurscarCurso2") != null)
+        if(request.getParameter("btnBurscarCurso_EliminarCurso") != null)
         {
         	System.out.println("btnBuscarCurso");
         	//String docente = "2";
@@ -219,7 +242,7 @@ public class ServletCurso extends HttpServlet {
         		request.setAttribute("Result_Año", curso.getAño());
         		
         		
-        		if(request.getParameter("btnBurscarCurso2") != null)
+        		if(request.getParameter("btnBurscarCurso_EliminarCurso") != null)
         		{
         			request.setAttribute("Result_Docente", curso.getDocente().getApellido() + ", " + curso.getDocente().getNombre());
         			request.setAttribute("Result_Materia", curso.getMateria().getNombre());
@@ -227,7 +250,9 @@ public class ServletCurso extends HttpServlet {
         	}
         	else
         	{
-        		System.out.println("No se encontro curso en BBDD");
+        		String error = "No se encontro curso en nuestros registros. Por favor, revise los valores y vuenva a intentar.";
+        		System.out.println(error);
+        		request.setAttribute("Error", error);
         	}
         	
         	redirectJSP = "/EliminarCurso.jsp";
@@ -235,58 +260,71 @@ public class ServletCurso extends HttpServlet {
         
         if(request.getParameter("btnBurscarCurso_Inscripcion") != null)
         {
-        	System.out.println("btnBurscarCurso_Inscripcion");
-        	//String docente = "2";
-        	String cuatrimestre = request.getParameter("txtCuatrimestre");
-        	String año = request.getParameter("txtAnio");
-        	String materia = request.getParameter("txtMateria");
-        	
-        	Curso curso = new Curso();
-        	curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
-        	//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
-        	curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        	curso.setAño(Integer.parseInt(año));
-        	
-        	Boolean result = false;
-        	try {
+        	try
+        	{
+        		System.out.println("btnBurscarCurso_Inscripcion");
+        		//String docente = "2";
+        		String cuatrimestre = request.getParameter("txtCuatrimestre");
+        		String año = request.getParameter("txtAnio");
+        		String materia = request.getParameter("txtMateria");
+        		
+        		Curso curso = new Curso();
+        		curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
+        		//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
+        		curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
+        		curso.setAño(Integer.parseInt(año));
+        		
+        		Boolean result = false;
         		result = cursoDao.read(curso);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		
-        	if(result == true)
-        	{
-        		request.setAttribute("Curso", curso);
+        		
+        		if(result == true)
+        		{
+        			request.setAttribute("Curso", curso);
+        		}
+        		else
+        		{
+        			String error = "No se encontro el curso en la base de datos, por favor corrija los valores.";
+        			System.out.println(error);
+        			request.setAttribute("Error", error);
+        		}
         	}
-        	else
+        	catch(Exception e)
         	{
-        		System.out.println("No se encontro curso en BBDD, se carga mensaje de error");
-
-        		request.setAttribute("ERROR", "No se encontro el curso en la base de datos, por favor corrija los valores.");
+        		String error = "Whoops! Algo fallo al procesar la solicitud. Por favor revise los datos e intente nuevamente.";
+    			System.out.println(error);
+    			request.setAttribute("Error", error);
         	}
         	
         		redirectJSP = "/InscripcionCurso.jsp";    
         }
         if(request.getParameter("btnInscribirACurso") != null)
 		{
-        	System.out.println("Accion boton 'Inscribir curso'");
-        	ArrayList <Alumno> alumnos = (ArrayList<Alumno>)request.getSession().getAttribute("Alumnos");
-			int idCurso = Integer.parseInt(request.getParameter("txtID").toString());
-			int idx = 0;
-			for(Alumno a : alumnos)
-			{
-				
-				String cbxName = "cbx" + idx;
-        		if(request.getParameter(cbxName) != null)
+        	try
+        	{
+        		System.out.println("Accion boton 'Inscribir curso'");
+        		ArrayList <Alumno> alumnos = (ArrayList<Alumno>)request.getSession().getAttribute("Alumnos");
+        		int idCurso = Integer.parseInt(request.getParameter("txtID").toString());
+        		int idx = 0;
+        		for(Alumno a : alumnos)
         		{
-        			if(!cursoAlumno.insert(idCurso,a.getID()))
+        			
+        			String cbxName = "cbx" + idx;
+        			if(request.getParameter(cbxName) != null)
         			{
-        				System.out.println("Falló la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
-        			}        			
-        		}
-        		idx++;
-			}
+        				if(!cursoAlumno.insert(idCurso,a.getID()))
+        				{
+        					System.out.println("Falló la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
+        				}        			
+        			}
+        			idx++;
+        		}        		
+        	}
+        	catch(Exception e)
+        	{
+        		String error = "Whoops! Algo fallo al procesar la solicitud. Por favor revise los datos e intente nuevamente.";
+        		System.out.println(error);
+        		request.setAttribute("Error", error);
+        	}
 
 			redirectJSP = "/InscripcionCurso.jsp";
 		}
@@ -301,7 +339,9 @@ public class ServletCurso extends HttpServlet {
     		}
     		else
     		{
-    			System.out.println("Whoops! No pudimos dar de baja el curso, por favor intente nuevamente.");
+    			String error = "Whoops! No pudimos dar de baja el curso, por favor intente nuevamente.";
+    			System.out.println(error);
+    			request.setAttribute("Error", error);
     		}        		
         	
         	redirectJSP = "/EliminarCurso.jsp";

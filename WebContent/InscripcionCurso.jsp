@@ -30,6 +30,8 @@
 <body class="fondo">
 <jsp:include page="Menu.jsp"></jsp:include>
 <%
+	String error = (String)request.getAttribute("Error");
+
   	ArrayList<AlumnoNotas> alumnoNotas = null;
   	if (application.getAttribute("ListAlumnoNotas") != null)
 	{
@@ -259,6 +261,12 @@
         });
     }, false);
     })();
+        
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
     </script>
 </body>
 <footer>
