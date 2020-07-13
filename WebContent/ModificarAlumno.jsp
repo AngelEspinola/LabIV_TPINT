@@ -23,6 +23,8 @@
 <body class="fondo">
 <jsp:include page="Menu.jsp"></jsp:include>
 <%
+	String error = (String)request.getAttribute("Error");
+
   	Usuario u = null;
 	Docente d = null;
 	Alumno  a = null;
@@ -241,6 +243,12 @@
         });
     }, false);
     })();
+    
+    var error = "<%=error%>";
+    if(error != "null")
+   	{
+  		alert(error);
+   	}
     </script>
 </body>
 <footer>
