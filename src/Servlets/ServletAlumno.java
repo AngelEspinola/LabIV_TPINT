@@ -102,36 +102,47 @@ public class ServletAlumno extends HttpServlet
 		}
 		else if( request.getParameter("btnAltaAlumno") != null)
 		{
-			System.out.println("btnAltaAlumno != null");
-			Alumno aux = new Alumno();
-			aux = (Alumno)getServletContext().getAttribute("Alumno");
-			
-			System.out.println("txtDni:"+ request.getParameter("txtDni"));
-			System.out.println("ddlProvincia:"+ request.getParameter("ddlProvincia"));
-			System.out.println("ddlLocalidad:"+ request.getParameter("ddlLocalidad"));
-			
-			alumno.setLegajo( request.getParameter("txtLegajo") !=null?request.getParameter("txtLegajo"):aux.getLegajo());
-			alumno.setDni(request.getParameter("txtDni") !=null? request.getParameter("txtDni"):aux.getDni());
-			alumno.setNombre(request.getParameter("txtNombre") !=null?request.getParameter("txtNombre"):aux.getNombre());
-			alumno.setApellido(request.getParameter("txtApellido") !=null?request.getParameter("txtApellido"):aux.getApellido());
-			alumno.setNacimiento(request.getParameter("txtFechaNac") !=null?request.getParameter("txtFechaNac"):aux.getNacimiento());
-			alumno.setCalle(request.getParameter("txtCalle") !=null?request.getParameter("txtCalle"):aux.getCalle());
-			alumno.setNumero(request.getParameter("txtNumero") !=null?request.getParameter("txtNumero"):aux.getNumero());
-			localidad = request.getParameter("ddlLocalidad") !=null?new Localidad(Integer.parseInt(request.getParameter("ddlLocalidad"))):new Localidad(aux.getLocalidad().getId());
-			provincia = request.getParameter("ddlProvincia") !=null?new Provincia(Integer.parseInt(request.getParameter("ddlProvincia"))):new Provincia(aux.getProvincia().getId());
-			alumno.setLocalidad(localidad);
-			alumno.setProvincia(provincia);
-			alumno.setEmail(request.getParameter("txtEmail") !=null?request.getParameter("txtEmail"):aux.getEmail());
-			alumno.setTelefono(request.getParameter("txtTelefono") !=null?request.getParameter("txtTelefono"):aux.getTelefono());
-			if(DDao.insert(alumno))
+			try
 			{
-				System.out.println("Alta con éxito.");
+				System.out.println("btnAltaAlumno != null");
+				Alumno aux = new Alumno();
+				aux = (Alumno)getServletContext().getAttribute("Alumno");
+				
+				System.out.println("txtDni:"+ request.getParameter("txtDni"));
+				System.out.println("ddlProvincia:"+ request.getParameter("ddlProvincia"));
+				System.out.println("ddlLocalidad:"+ request.getParameter("ddlLocalidad"));
+				
+				alumno.setLegajo( request.getParameter("txtLegajo") !=null?request.getParameter("txtLegajo"):aux.getLegajo());
+				alumno.setDni(request.getParameter("txtDni") !=null? request.getParameter("txtDni"):aux.getDni());
+				alumno.setNombre(request.getParameter("txtNombre") !=null?request.getParameter("txtNombre"):aux.getNombre());
+				alumno.setApellido(request.getParameter("txtApellido") !=null?request.getParameter("txtApellido"):aux.getApellido());
+				alumno.setNacimiento(request.getParameter("txtFechaNac") !=null?request.getParameter("txtFechaNac"):aux.getNacimiento());
+				alumno.setCalle(request.getParameter("txtCalle") !=null?request.getParameter("txtCalle"):aux.getCalle());
+				alumno.setNumero(request.getParameter("txtNumero") !=null?request.getParameter("txtNumero"):aux.getNumero());
+				localidad = request.getParameter("ddlLocalidad") !=null?new Localidad(Integer.parseInt(request.getParameter("ddlLocalidad"))):new Localidad(aux.getLocalidad().getId());
+				provincia = request.getParameter("ddlProvincia") !=null?new Provincia(Integer.parseInt(request.getParameter("ddlProvincia"))):new Provincia(aux.getProvincia().getId());
+				alumno.setLocalidad(localidad);
+				alumno.setProvincia(provincia);
+				alumno.setEmail(request.getParameter("txtEmail") !=null?request.getParameter("txtEmail"):aux.getEmail());
+				alumno.setTelefono(request.getParameter("txtTelefono") !=null?request.getParameter("txtTelefono"):aux.getTelefono());
+				if(DDao.insert(alumno))
+				{
+					System.out.println("Alta con éxito.");
+				}
+				else
+				{
+					String error = "Error al dar de alta alumno. Por favor revise los datos ingresados e intente nuevamente.";
+					System.out.println(error);
+					request.setAttribute("Error", error);
+				}
 			}
-			else
+			catch(Exception e)
 			{
-				System.out.println("Falló la modificación.");
+				String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+				System.out.println(error);
+				request.setAttribute("Error", error);
 			}
-			RequestDispatcher rq=request.getRequestDispatcher("Main.jsp");
+			RequestDispatcher rq=request.getRequestDispatcher("AltaAlumno.jsp");
 			rq.include(request, response);
 		}
 		
@@ -144,20 +155,32 @@ public class ServletAlumno extends HttpServlet
 		}
 		else if( request.getParameter("btnBuscarAlumnoBaja") != null)
 		{
-			System.out.println("btnBuscarAlumnoBaja != null");
-			System.out.println("txtDni:"+ request.getParameter("txtDni"));
-			System.out.println("txtLegajo:"+ request.getParameter("txtLegajo"));
-			alumno.setLegajo(request.getParameter("txtLegajo"));
-			alumno.setDni(request.getParameter("txtDni"));
-			
-			alumno = DDao.buscarAlumno(alumno);
-			if(alumno != null)
+			try
 			{
-				getServletContext().setAttribute("Alumno", alumno);
+				System.out.println("btnBuscarAlumnoBaja != null");
+				System.out.println("txtDni:"+ request.getParameter("txtDni"));
+				System.out.println("txtLegajo:"+ request.getParameter("txtLegajo"));
+				alumno.setLegajo(request.getParameter("txtLegajo"));
+				alumno.setDni(request.getParameter("txtDni"));
+				
+				alumno = DDao.buscarAlumno(alumno);
+				if(alumno != null)
+				{
+					getServletContext().setAttribute("Alumno", alumno);
+				}
+				else
+				{
+					//getServletContext().setAttribute("Alumno", new Alumno());
+					String error = "No se encuentra alumno en nuestros registros. Por favor revise los datos ingresados e intente nuevamente.";
+					System.out.println(error);
+					request.setAttribute("Error", error);
+				}				
 			}
-			else
+			catch(Exception e)
 			{
-				getServletContext().setAttribute("Alumno", new Alumno());
+				String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+				System.out.println(error);
+				request.setAttribute("Error", error);
 			}
 			
 			RequestDispatcher rq=request.getRequestDispatcher("/EliminarAlumno.jsp");
@@ -165,29 +188,45 @@ public class ServletAlumno extends HttpServlet
 		}
 		else if( request.getParameter("btnAlumnoBaja") != null)
 		{
-			System.out.println("btnAlumnoBaja != null");
-			
-			
-			if (getServletContext().getAttribute("Alumno") != null)
+			try
 			{
-				alumno = (Alumno)getServletContext().getAttribute("Alumno");
-				alumno.setEstado(false);
+				System.out.println("btnAlumnoBaja != null");				
 				
-				if(DDao.baja(alumno))
+				if (getServletContext().getAttribute("Alumno") != null)
 				{
-					String log = "Baja logica con exito.";
-					System.out.println(log);
-					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
-					rq.include(request, response);
+					alumno = (Alumno)getServletContext().getAttribute("Alumno");
+					alumno.setEstado(false);
+					
+					if(DDao.baja(alumno))
+					{
+						String log = "Baja logica con exito.";
+						System.out.println(log);
+						/*RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+						rq.include(request, response);*/
+					}
+					else
+					{
+						String error = "Error al eliminar alumno en nuestros registros. Por favor revise los datos ingresados e intente nuevamente.";
+						System.out.println(error);
+						request.setAttribute("Error", error);
+					}
 				}
 				else
 				{
-					String log = "Falló la baja logica.";
-					System.out.println(log);
-					RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
-					rq.include(request, response);
+					String error = "No hay ningun alumno cargado. Por favor primero busque el alumno que desea dar de baja.";
+					System.out.println(error);
+					request.setAttribute("Error", error);
 				}
+				
 			}
+			catch(Exception e)
+			{
+				String error = "Whoops! Algo fallo al procesas la solicitud. Por favor revise los valores e intente nuevamente";
+				System.out.println(error);
+				request.setAttribute("Error", error);
+			}
+			RequestDispatcher rq=request.getRequestDispatcher("/EliminarAlumno.jsp");//Primero deberia ir a una pagina de aviso
+			rq.include(request, response);
 		}
     }
 

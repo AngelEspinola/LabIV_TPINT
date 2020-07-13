@@ -129,8 +129,8 @@ public class ServletDocente extends HttpServlet {
 					{
 						String log = "Baja logica con exito.";
 						System.out.println(log);
-						RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
-						rq.include(request, response);
+						/*RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
+						rq.include(request, response);*/
 					}
 					else
 					{
