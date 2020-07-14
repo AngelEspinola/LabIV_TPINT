@@ -19,6 +19,7 @@ public class CursoDaoImpl implements CursoDao{
 	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE Baja=0";
 	private static final String readallforID = "SELECT * FROM bdTPInt.cursos WHERE Baja=0 AND docente=?";
 	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND año=? AND baja=0";
+	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND año=? AND baja=0 AND docente=?";
 	
 	public boolean insert(Curso curso) {
 		// TODO Auto-generated method stub
@@ -181,6 +182,42 @@ public class CursoDaoImpl implements CursoDao{
 		statement.setInt(1, curso.getMateria().getId());
 		statement.setInt(2, curso.getCuatrimestre());
 		statement.setInt(3, curso.getAño());
+		ResultSet resultSet = statement.executeQuery();
+		try
+		{	
+			if(resultSet.next())
+			{
+				response = getCurso(resultSet, curso);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally {
+		    //try { resultSet.close(); } catch (Exception e) { /* ignored */ }
+		    //try { statement.close(); } catch (Exception e) { /* ignored */ }
+		    //try { conexion.close(); } catch (Exception e) { /* ignored */ }
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public Boolean read(Curso curso, int ID) throws SQLException {
+		// TODO Auto-generated method stub
+		Boolean response = false;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		PreparedStatement statement = conexion.prepareStatement(readforID);
+		statement.setInt(1, curso.getMateria().getId());
+		statement.setInt(2, curso.getCuatrimestre());
+		statement.setInt(3, curso.getAño());
+		statement.setInt(4, ID);
 		ResultSet resultSet = statement.executeQuery();
 		try
 		{	

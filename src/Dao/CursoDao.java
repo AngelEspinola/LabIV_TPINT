@@ -11,6 +11,7 @@ public interface CursoDao {
 	public boolean delete(Curso curso);
 	public boolean baja(String ID);
 	public Boolean read(Curso curso) throws SQLException;
+	public Boolean read(Curso curso, int ID) throws SQLException;
 	public List<Curso> readAll();
 	public List<Curso> readAll(int ID);
 }

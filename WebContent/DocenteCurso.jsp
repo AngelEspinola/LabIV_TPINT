@@ -27,14 +27,14 @@
 <jsp:include page="Menu.jsp"></jsp:include>
 <%
   	ArrayList<AlumnoNotas> alumnoNotas = null;
-  	if (application.getAttribute("ListAlumnoNotas") != null)
+  	if (request.getAttribute("ListAlumnoNotas") != null)
 	{
-  		alumnoNotas = (ArrayList<AlumnoNotas>)application.getAttribute("ListAlumnoNotas");
+  		alumnoNotas = (ArrayList<AlumnoNotas>)request.getAttribute("ListAlumnoNotas");
 	}
   	Docente d = null;
-  	if (application.getAttribute("Docente") != null)
+  	if (session.getAttribute("User") != null)
 	{
-    	d = (Docente)application.getAttribute("Docente");
+    	d = (Docente)session.getAttribute("User");
 	}
 %>
     <div class="row">

@@ -283,7 +283,14 @@ public class ServletCurso extends HttpServlet {
         		curso.setAño(Integer.parseInt(año));
         		
         		Boolean result = false;
-        		result = cursoDao.read(curso);
+        		if(usuario.getRol() == 1)
+        		{
+        			result = cursoDao.read(curso);        			
+        		}
+        		else
+        		{
+        			result = cursoDao.read(curso, usuario.getID_docente());
+        		}
         		
         		if(result == true)
         		{

@@ -46,6 +46,27 @@ public class ServletCalificar extends HttpServlet {
 				rq.include(request, response);
 			}
 		}
+		else if(request.getParameter("btnCalificarCurso") != null)
+		{
+			try
+			{
+				idCurso = Integer.parseInt(request.getParameter("IDCurso"));
+				ListAlumnoNotas = ADAO.readAll(idCurso);
+				System.out.println("Cantidad de alumnos: "+ListAlumnoNotas.size());
+				
+				request.setAttribute("ListAlumnoNotas", ListAlumnoNotas);
+				RequestDispatcher rq=request.getRequestDispatcher("/DocenteCurso.jsp");
+				rq.include(request, response);
+			}
+			catch(Exception e)
+			{
+				String error = "Whoops! Algo fallo al procesar la peticion. Por favor intente nuevamente mas tarde.";
+				System.out.println(error);
+				request.setAttribute("Error", error);
+				RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
+				rq.include(request, response);
+			}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
