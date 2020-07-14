@@ -127,7 +127,12 @@ public class ServletAlumno extends HttpServlet
 				alumno.setTelefono(request.getParameter("txtTelefono") !=null?request.getParameter("txtTelefono"):aux.getTelefono());
 				if(DDao.insert(alumno))
 				{
-					System.out.println("Alta con éxito.");
+					String success  = "¡El docente ha sido generado con exito!";
+					System.out.println(success);
+					request.setAttribute("Exito", success);
+					RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
+					rq.include(request, response);
+					return;
 				}
 				else
 				{
@@ -199,10 +204,12 @@ public class ServletAlumno extends HttpServlet
 					
 					if(DDao.baja(alumno))
 					{
-						String log = "Baja logica con exito.";
-						System.out.println(log);
-						/*RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");//Primero deberia ir a una pagina de aviso
-						rq.include(request, response);*/
+						String success  = "¡El alumno ha sido eliminado con exito!";
+						System.out.println(success);
+						request.setAttribute("Exito", success);
+						RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
+						rq.include(request, response);
+						return;
 					}
 					else
 					{

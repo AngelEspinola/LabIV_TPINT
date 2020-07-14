@@ -98,7 +98,7 @@ public class ServletCurso extends HttpServlet {
 	        }
 		}
         
-        if(request.getParameter("btnAltaCurso") != null)
+		else if(request.getParameter("btnAltaCurso") != null)
 		{
         	System.out.println("Accion boton 'Agregar curso'");
 			Curso curso = new Curso();
@@ -112,13 +112,17 @@ public class ServletCurso extends HttpServlet {
 				
 				if(cursoDao.insert(curso))
 				{
-					System.out.println("Curso ingresado con exito!");
+					String success  = "¡El curso ha sido generado con exito!";
+					System.out.println(success);
+					request.setAttribute("Exito", success);
+					redirectJSP = "/Exito.jsp";
 				}
 				else
 				{
 					String error = "Ocurrio un error al crear el curso. Por favor revise los valores e intente nuevamente";
 					System.out.println(error);
 					request.setAttribute("Error", error);
+					redirectJSP = "/AltaCurso.jsp";
 				}
 			}
 			catch (Exception e)
@@ -126,12 +130,12 @@ public class ServletCurso extends HttpServlet {
 				String error = "Whoops! Algo fallo al intentar generar el curso. Por favor intente nuevamente";
 				System.out.println(error);
 				request.setAttribute("Error", error);
+				redirectJSP = "/AltaCurso.jsp";
 			}
 
-			redirectJSP = "/AltaCurso.jsp";
 		}
         
-        if(request.getParameter("btnGuardarCurso") != null)
+        else if(request.getParameter("btnGuardarCurso") != null)
 		{
         	try
         	{        		
@@ -148,13 +152,17 @@ public class ServletCurso extends HttpServlet {
         		
         		if(cursoDao.modify(curso))
         		{
-        			System.out.println("Curso ingresado con exito!");
+        			String success  = "¡El curso ha sido actualizado con exito!";
+					System.out.println(success);
+					request.setAttribute("Exito", success);
+					redirectJSP = "/Exito.jsp";
         		}
         		else
         		{
         			String error = "Error al modificar curso, por favor revise los campos e intente nuevamente.";
         			System.out.println(error);
         			request.setAttribute("Error", error);
+        			redirectJSP = "/ModificarCurso.jsp";
         		}
         	}
         	catch(Exception e)
@@ -162,11 +170,11 @@ public class ServletCurso extends HttpServlet {
         		String error = "Error al modificar curso, por favor revise los campos e intente nuevamente.";
     			System.out.println(error);
     			request.setAttribute("Error", error);
+    			redirectJSP = "/ModificarCurso.jsp";
         	}
-			redirectJSP = "/ModificarCurso.jsp";
 		}
         
-        if(request.getParameter("btnBurscarCurso_ModificarCurso") != null)
+        else if(request.getParameter("btnBurscarCurso_ModificarCurso") != null)
         {
         	try
         	{
@@ -211,7 +219,7 @@ public class ServletCurso extends HttpServlet {
         		redirectJSP = "/ModificarCurso.jsp";    
         }
 
-        if(request.getParameter("btnBurscarCurso_EliminarCurso") != null)
+        else if(request.getParameter("btnBurscarCurso_EliminarCurso") != null)
         {
         	System.out.println("btnBuscarCurso");
         	//String docente = "2";
@@ -258,7 +266,7 @@ public class ServletCurso extends HttpServlet {
         	redirectJSP = "/EliminarCurso.jsp";
         }
         
-        if(request.getParameter("btnBurscarCurso_Inscripcion") != null)
+        else if(request.getParameter("btnBurscarCurso_Inscripcion") != null)
         {
         	try
         	{
@@ -297,7 +305,7 @@ public class ServletCurso extends HttpServlet {
         	
         		redirectJSP = "/InscripcionCurso.jsp";    
         }
-        if(request.getParameter("btnInscribirACurso") != null)
+        else if(request.getParameter("btnInscribirACurso") != null)
 		{
         	try
         	{
@@ -317,34 +325,51 @@ public class ServletCurso extends HttpServlet {
         				}        			
         			}
         			idx++;
-        		}        		
+        		}
+        		String success  = "¡Se han inscripto los alumnos con exito!";
+				System.out.println(success);
+				request.setAttribute("Exito", success);
+				redirectJSP = "/Exito.jsp";
         	}
         	catch(Exception e)
         	{
         		String error = "Whoops! Algo fallo al procesar la solicitud. Por favor revise los datos e intente nuevamente.";
         		System.out.println(error);
         		request.setAttribute("Error", error);
+        		redirectJSP = "/InscripcionCurso.jsp";
         	}
 
-			redirectJSP = "/InscripcionCurso.jsp";
 		}
-        if(request.getParameter("btnEliminarCurso") != null)
+        else if(request.getParameter("btnEliminarCurso") != null)
         {
-        	System.out.println("Accion boton 'Baja curso'");
-    		String ID = request.getParameter("txtID");
-    		
-    		if(cursoDao.baja(ID))
-    		{
-    			System.out.println("Curso dado de baja con exito!");
-    		}
-    		else
-    		{
-    			String error = "Whoops! No pudimos dar de baja el curso, por favor intente nuevamente.";
-    			System.out.println(error);
-    			request.setAttribute("Error", error);
-    		}        		
+        	try
+        	{
+        		System.out.println("Accion boton 'Baja curso'");
+        		String ID = request.getParameter("txtID");
+        		
+        		if(cursoDao.baja(ID))
+        		{
+        			String success  = "¡Se ha eliminado el curso con exito!";
+        			System.out.println(success);
+        			request.setAttribute("Exito", success);
+        			redirectJSP = "/Exito.jsp";
+        		}
+        		else
+        		{
+        			String error = "Whoops! No pudimos dar de baja el curso, por favor intente nuevamente.";
+        			System.out.println(error);
+        			request.setAttribute("Error", error);
+        			redirectJSP = "/EliminarCurso.jsp";
+        		}        		        		
+        	}
+        	catch(Exception e)
+        	{
+        		String error = "Whoops! Algo fallo al procesar la solicitud. Por favor revise los datos e intente nuevamente.";
+        		System.out.println(error);
+        		request.setAttribute("Error", error);
+        		redirectJSP = "/EliminarCurso.jsp";
+        	}
         	
-        	redirectJSP = "/EliminarCurso.jsp";
         }
         
 
