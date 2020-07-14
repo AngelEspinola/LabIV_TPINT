@@ -126,7 +126,7 @@
                         <div class="col-md-3 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="txtNumero">N�mero</label>
+                                    <label class="input-group-text" for="txtNumero">Numero</label>
                                 </div>
                                 <input type="text" class="form-control" id="txtNumero" name="txtNumero" value="<%=a.getNumero()%>" required>
                                 <div class="valid-feedback">Completo!</div>
