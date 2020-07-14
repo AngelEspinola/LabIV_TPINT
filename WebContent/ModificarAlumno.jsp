@@ -249,6 +249,9 @@
    	{
   		alert(error);
    	}
+    
+    document.getElementById('txtLegajoNew').readOnly = true;
+    document.getElementById('txtDniNew').readOnly = true;
     </script>
 </body>
 <footer>
