@@ -54,6 +54,7 @@
                                 <th>Año</th>
                                 <th>Cuatrimestre</th>
                                 <th>Docente</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,10 +65,17 @@
                                 	{
                                 %>
                                 		 <tr>
-			                                <td><%=c.getMateria().getNombre()%></td>
+                                		 <form action="ServletCalificar" method="get">
+			                                <td><%=c.getMateria().getNombre()%> <input type="hidden" name="IDCurso" value="<%=c.getID()%>"></td>
 			                                <td><%=c.getAño()%></td>
 			                                <td><%=c.getCuatrimestre() == 1 ? "Primer Cuatrimestre" : "Segundo Cuatrimestre"%></td>
 			                                <td><%=c.getDocente().getApellido() + ", " + c.getDocente().getNombre()%></td>
+			                                <td>
+			                                	<div>
+			                                		<button type="submit" name="btnCalificarCurso_Listado">Calificar</button>
+			                                	</div>
+			                                </td>
+			                            </form>
                             			</tr>
                                 <%
                                 	}

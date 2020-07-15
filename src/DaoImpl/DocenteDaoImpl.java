@@ -18,8 +18,8 @@ public class DocenteDaoImpl implements DocenteDao{
 	private static final String baja   = "UPDATE BDTPINT.docentes SET estado=? WHERE legajo=? AND dni=?";
 	private static final String readall= "SELECT * FROM BDTPINT.docentes WHERE estado=1";
 	private static final String readone= "SELECT * FROM BDTPINT.docentes WHERE estado=1 AND legajo=? AND dni=?";
-	private static final String read   = "SELECT * FROM bdTPInt.Docentes WHERE DNI=? AND estado=1";
-	private static final String readID = "SELECT * FROM bdTPInt.Docentes WHERE ID=? AND estado=1";
+	private static final String read   = "SELECT * FROM bdTPInt.docentes WHERE dni=? AND estado=1";
+	private static final String readID = "SELECT * FROM bdTPInt.docentes WHERE ID=? AND estado=1";
 	
 	public boolean insert(Docente docente)
 	{

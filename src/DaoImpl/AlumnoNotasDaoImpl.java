@@ -11,7 +11,7 @@ import Dao.AlumnoNotasDao;
 
 public class AlumnoNotasDaoImpl implements AlumnoNotasDao{
 	private static final String insert = "INSERT INTO BDTPINT.alumnoxcurso (id_curso, id_alumno) VALUES(?, ?)";
-	private static final String modify = "UPDATE BDTPINT.alumnoxcurso SET nota1=?, nota2=?, recuperatorio1=?, recuperatorio2=?, estado=? Where id_curso=? AND id_alumno=?";
+	private static final String modify = "UPDATE BDTPINT.alumnoxcurso SET nota1=?, nota2=?, recuperatorio1=?, recuperatorio2=? Where id_curso=? AND id_alumno=?";
 	private static final String readall = "SELECT * FROM BDTPINT.alumnonotas WHERE id_curso=?";
 	
 	public boolean insert(int idCurso, int idAlumno)
@@ -55,9 +55,8 @@ public class AlumnoNotasDaoImpl implements AlumnoNotasDao{
 			statement.setInt(2, notas.getNota2());
 			statement.setInt(3, notas.getRecuperatorio1());
 			statement.setInt(4, notas.getRecuperatorio2());
-			statement.setInt(5, notas.getEstadoInt()-1);
-			statement.setInt(6, notas.getIdCurso());
-			statement.setInt(7, notas.getIdAlumno());
+			statement.setInt(5, notas.getIdCurso());
+			statement.setInt(6, notas.getIdAlumno());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -106,9 +105,8 @@ public class AlumnoNotasDaoImpl implements AlumnoNotasDao{
 		int    nota2	= resultSet.getInt("nota2");
 		int    recu1	= resultSet.getInt("recuperatorio1");
 		int    recu2	= resultSet.getInt("recuperatorio2");
-		String estado	= resultSet.getInt("estado")==1?"Regular":"Libre";
 		
-		return new AlumnoNotas(idAlumno, idCurso, legajo, nombre, apellido, nota1, nota2, recu1, recu2, estado);
+		return new AlumnoNotas(idAlumno, idCurso, legajo, nombre, apellido, nota1, nota2, recu1, recu2);
 	}
 
 }

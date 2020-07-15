@@ -54,7 +54,6 @@
                    <div class="dropdown-divider"></div>
                    	<a class="dropdown-item" href="ServletCurso?Param=listarCursos">Listado</a>
                    <div class="dropdown-divider"></div>
-                   	<a class="dropdown-item" href="ServletCalificar?IDDocente=1">Calificar Alumnos</a>
                    	<a class="dropdown-item" href="ServletCurso?Param=inscripcionCurso">Inscripcion a curso</a>
                	   </div>
 				</li>

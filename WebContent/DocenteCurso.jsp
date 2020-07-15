@@ -15,7 +15,7 @@
         
         <!--Referencia local-->
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <title>TP Final - Inicio</title>
+        <title>Calificar curso</title>
 
         <style>
             .fondo{ background-color: #E8EAF6; }
@@ -27,14 +27,14 @@
 <jsp:include page="Menu.jsp"></jsp:include>
 <%
   	ArrayList<AlumnoNotas> alumnoNotas = null;
-  	if (application.getAttribute("ListAlumnoNotas") != null)
+  	if (request.getAttribute("ListAlumnoNotas") != null)
 	{
-  		alumnoNotas = (ArrayList<AlumnoNotas>)application.getAttribute("ListAlumnoNotas");
+  		alumnoNotas = (ArrayList<AlumnoNotas>)request.getAttribute("ListAlumnoNotas");
 	}
   	Docente d = null;
-  	if (application.getAttribute("Docente") != null)
+  	if (session.getAttribute("User") != null)
 	{
-    	d = (Docente)application.getAttribute("Docente");
+    	d = (Docente)session.getAttribute("User");
 	}
 %>
     <div class="row">
@@ -44,13 +44,13 @@
         <div class=" col-1"></div>
         <div class="col-10 card formulario">
             <div class="card-header">
-                <h6 class="card-title"><%=d.getApellido()%></h6>
+                <h6 class="card-title"><%=d!=null?d.getApellido(): ""%></h6>
             </div>
             <div class="card-header text-center">
                 <h5 class="card-title">Curso</h5>
             </div>
             <div class=" card-body">
-            <form class="needs-validation" name="CalificarCurso" action="<%="ServletCalificar?IDDocente="+Integer.toString(d.getID())%>" method="post" novalidate>
+            <form class="needs-validation" name="CalificarCurso" action="ServletCalificar" method="post" novalidate>
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
@@ -64,6 +64,7 @@
                             <th>Estado</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                     <%
                   	if (alumnoNotas != null)

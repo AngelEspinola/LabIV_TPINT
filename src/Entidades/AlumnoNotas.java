@@ -11,8 +11,7 @@ public class AlumnoNotas {
 	private int	Recuperatorio1;
 	private int	Recuperatorio2;
 	private String Estado;
-	public AlumnoNotas(int idAlumno, int idCurso, String legajo, String nombre, String apellido, int nota1, int nota2, int recuperatorio1, int recuperatorio2,
-			String estado) {
+	public AlumnoNotas(int idAlumno, int idCurso, String legajo, String nombre, String apellido, int nota1, int nota2, int recuperatorio1, int recuperatorio2) {
 		super();
 		IdAlumno = idAlumno;
 		IdCurso  = idCurso;
@@ -23,7 +22,6 @@ public class AlumnoNotas {
 		Nota2 = nota2;
 		Recuperatorio1 = recuperatorio1;
 		Recuperatorio2 = recuperatorio2;
-		Estado = estado;
 	}
 	public AlumnoNotas()
 	{
