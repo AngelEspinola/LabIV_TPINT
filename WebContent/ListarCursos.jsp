@@ -72,7 +72,7 @@
 			                                <td><%=c.getDocente().getApellido() + ", " + c.getDocente().getNombre()%></td>
 			                                <td>
 			                                	<div>
-			                                		<button type="submit" name="btnCalificarCurso">Calificar</button>
+			                                		<button type="submit" name="btnCalificarCurso_Listado">Calificar</button>
 			                                	</div>
 			                                </td>
 			                            </form>

@@ -46,11 +46,13 @@ public class ServletCalificar extends HttpServlet {
 				rq.include(request, response);
 			}
 		}
-		else if(request.getParameter("btnCalificarCurso") != null)
+		else if(request.getParameter("btnCalificarCurso_Listado") != null)
 		{
 			try
 			{
+				request.getSession().setAttribute("idCurso", "");
 				idCurso = Integer.parseInt(request.getParameter("IDCurso"));
+				request.getSession().setAttribute("idCurso", idCurso);
 				ListAlumnoNotas = ADAO.readAll(idCurso);
 				System.out.println("Cantidad de alumnos: "+ListAlumnoNotas.size());
 				
@@ -71,8 +73,7 @@ public class ServletCalificar extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet doPost.");
-		Docente docente = null;
-		DocenteDaoImpl DDAO = new DocenteDaoImpl();
+		String redirectJSP = "";
 		AlumnoNotasDaoImpl ADAO = new AlumnoNotasDaoImpl();
 		ArrayList<AlumnoNotas> ListAlumnoNotas = null;
 		AlumnoNotas aux = new AlumnoNotas();
@@ -82,20 +83,14 @@ public class ServletCalificar extends HttpServlet {
 		int parcialDos;
 		int recuUno;
 		int recuDos;
-		if(request.getParameter("IDDocente") != null)
+		if(request.getParameter("btnCalificarCurso") != null)
 		{
-			int ID = Integer.parseInt(request.getParameter("IDDocente"));
-			System.out.println("ID: "+ID);
-			docente = DDAO.readID(ID);
-			if(docente != null && docente.getID() != 0)
+			idCurso = Integer.parseInt(request.getSession().getAttribute("idCurso").toString());
+			if(idCurso != 0)
 			{
-				idCurso = 1;
-				System.out.println("Alumnos del curso de "+ docente.getNombre());
 				//Cargo los alumnos //Cargo los alumnos del curso idCurso
 				ListAlumnoNotas = ADAO.readAll(idCurso);
 				System.out.println("Cantidad de alumnos: "+ListAlumnoNotas.size());
-				getServletContext().setAttribute("ListAlumnoNotas", ListAlumnoNotas);
-				getServletContext().setAttribute("Docente", docente);
 			
 				for(AlumnoNotas a : ListAlumnoNotas)
 				{
@@ -135,20 +130,24 @@ public class ServletCalificar extends HttpServlet {
 					aux.setEstado(estado);
 					if( ADAO.modify(aux))
 					{
-						System.out.println("Mofificación exitosa");
+						String success  = "¡Se ha calificado al curso con exito!";
+						System.out.println(success);
+						request.setAttribute("Exito", success);
+						redirectJSP = "/Exito.jsp";
 					}
-					else if( ADAO.modify(aux))
+					else
 					{
-						System.out.println("Fallo mofificación por segunda vez");
+						String error = "Whoops! No pudimos calificar al curso correctamente. Por favor intente nuevamente";
+	        			System.out.println(error);
+	        			request.setAttribute("Error", error);
+	        			redirectJSP = "/DocenteCurso.jsp";
 					}
 				}
 		
-				//Actualizo la lista con las notas cargadas
-				ListAlumnoNotas = ADAO.readAll(idCurso);
-				getServletContext().setAttribute("ListAlumnoNotas", ListAlumnoNotas);
 			}
 		}
-		RequestDispatcher rq=request.getRequestDispatcher("/DocenteCurso.jsp");
-		rq.include(request, response);
+		
+		RequestDispatcher rq = request.getRequestDispatcher(redirectJSP);
+    	rq.include(request, response);
 	}
 }
