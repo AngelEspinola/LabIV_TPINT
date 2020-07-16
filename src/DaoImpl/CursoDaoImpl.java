@@ -14,9 +14,9 @@ import Entidades.Materia;
 public class CursoDaoImpl implements CursoDao{
 	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, anio, materia) VALUES(?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM bdTPInt.Docentes WHERE Dni = ?";
-	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, ani=?, materia=? Where ID=?";
+	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, anio=?, materia=? Where ID=?";
 	private static final String baja   = "UPDATE bdTPInt.cursos SET Baja=1 WHERE ID=?";
-	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE Baja=0";
+	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE baja=0";
 	private static final String readallforID = "SELECT * FROM bdTPInt.cursos WHERE Baja=0 AND docente=?";
 	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND anio=? AND baja=0";
 	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND anio=? AND baja=0 AND docente=?";

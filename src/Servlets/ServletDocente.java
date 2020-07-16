@@ -172,6 +172,7 @@ public class ServletDocente extends HttpServlet {
 			try
 			{
 				System.out.println("Alta");
+				getServletContext().setAttribute("Docente", null);
 				provincias = new ArrayList<Provincia>();
 				localidades = new ArrayList<Localidad>();
 				provincias = PDao.readAll();
@@ -271,6 +272,7 @@ public class ServletDocente extends HttpServlet {
 		else if( request.getParameter("Baja") != null)
 		{
 			System.out.println("Baja");
+			getServletContext().setAttribute("Docente", null);
 			RequestDispatcher rq=request.getRequestDispatcher("/EliminarDocente.jsp");
 	       	rq.include(request, response);
 		}

@@ -65,7 +65,7 @@ public class ServletCurso extends HttpServlet {
 			else
 			{
 				ListCurso = cursoDao.readAll(usuario.getID_docente());
-				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD");
+				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD para el docente ID: " + usuario.getID_docente());
 				request.getSession().setAttribute("Cursos", ListCurso);				
 			}
 			
@@ -224,14 +224,14 @@ public class ServletCurso extends HttpServlet {
         	System.out.println("btnBuscarCurso");
         	//String docente = "2";
         	String cuatrimestre = request.getParameter("txtCuatrimestre");
-        	String a�o = request.getParameter("txtAnio");
+        	String anio = request.getParameter("txtAnio");
         	String materia = request.getParameter("txtMateria");
         	
         	Curso curso = new Curso();
         	curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
         	//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
         	curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        	curso.setAnio(Integer.parseInt(a�o));
+        	curso.setAnio(Integer.parseInt(anio));
         	
         	Boolean result = false;
         	try {
@@ -273,14 +273,14 @@ public class ServletCurso extends HttpServlet {
         		System.out.println("btnBurscarCurso_Inscripcion");
         		//String docente = "2";
         		String cuatrimestre = request.getParameter("txtCuatrimestre");
-        		String a�o = request.getParameter("txtAnio");
+        		String anio = request.getParameter("txtAnio");
         		String materia = request.getParameter("txtMateria");
         		
         		Curso curso = new Curso();
         		curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
         		//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
         		curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        		curso.setAnio(Integer.parseInt(a�o));
+        		curso.setAnio(Integer.parseInt(anio));
         		
         		Boolean result = false;
         		if(usuario.getRol() == 1)
