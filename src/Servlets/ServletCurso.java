@@ -65,7 +65,7 @@ public class ServletCurso extends HttpServlet {
 			else
 			{
 				ListCurso = cursoDao.readAll(usuario.getID_docente());
-				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD");
+				System.out.println("Se trajeron " + ListCurso.size() + " cursos de la BBDD para el docente ID: " + usuario.getID_docente());
 				request.getSession().setAttribute("Cursos", ListCurso);				
 			}
 			

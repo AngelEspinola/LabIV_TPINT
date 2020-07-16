@@ -164,7 +164,7 @@ public class DocenteDaoImpl implements DocenteDao{
 	{
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
-		Docente docente = new Docente();
+		Docente docente = null;
 		Conexion conexion = Conexion.getConexion();
 		try 
 		{
