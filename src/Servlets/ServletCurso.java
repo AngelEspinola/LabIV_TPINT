@@ -108,11 +108,11 @@ public class ServletCurso extends HttpServlet {
 				//linea
 				curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
 				curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
-				curso.setAño(Integer.parseInt(request.getParameter("txtAnio")));
+				curso.setAnio(Integer.parseInt(request.getParameter("txtAnio")));
 				
 				if(cursoDao.insert(curso))
 				{
-					String success  = "¡El curso ha sido generado con exito!";
+					String success  = "El curso ha sido generado con exito!";
 					System.out.println(success);
 					request.setAttribute("Exito", success);
 					redirectJSP = "/Exito.jsp";
@@ -147,12 +147,12 @@ public class ServletCurso extends HttpServlet {
         		curso.setMateria(materiaDao.read(Integer.parseInt(request.getParameter("ddlMateria"))));
         		curso.setCuatrimestre(Integer.parseInt(request.getParameter("ddlCuatrimestre")));
         		
-        		String añoNuevo = request.getParameter("txtAnioNuevo");
-        		curso.setAño(Integer.parseInt(añoNuevo));
+        		String anioNuevo = request.getParameter("txtAnioNuevo");
+        		curso.setAnio(Integer.parseInt(anioNuevo));
         		
         		if(cursoDao.modify(curso))
         		{
-        			String success  = "¡El curso ha sido actualizado con exito!";
+        			String success  = "El curso ha sido actualizado con exito!";
 					System.out.println(success);
 					request.setAttribute("Exito", success);
 					redirectJSP = "/Exito.jsp";
@@ -181,14 +181,14 @@ public class ServletCurso extends HttpServlet {
         		System.out.println("btnBurscarCurso_ModificarCurso");
         		//String docente = "2";
         		String cuatrimestre = request.getParameter("txtCuatrimestre");
-        		String año = request.getParameter("txtAnio");
+        		String anio = request.getParameter("txtAnio");
         		String materia = request.getParameter("txtMateria");
         		
         		Curso curso = new Curso();
         		curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
         		//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
         		curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        		curso.setAño(Integer.parseInt(año));
+        		curso.setAnio(Integer.parseInt(anio));
         		
         		Boolean result = false;
         		result = cursoDao.read(curso);
@@ -197,7 +197,7 @@ public class ServletCurso extends HttpServlet {
         		{
         			request.setAttribute("Result_ID", curso.getID());
         			request.setAttribute("Result_Cuatrimestre", curso.getCuatrimestre());
-        			request.setAttribute("Result_Año", curso.getAño());
+        			request.setAttribute("Result_Anio", curso.getAnio());
         			request.setAttribute("Result_Docente", curso.getDocente().getID());
         			request.setAttribute("Result_Materia", curso.getMateria().getId());
         		}
@@ -224,14 +224,14 @@ public class ServletCurso extends HttpServlet {
         	System.out.println("btnBuscarCurso");
         	//String docente = "2";
         	String cuatrimestre = request.getParameter("txtCuatrimestre");
-        	String año = request.getParameter("txtAnio");
+        	String aï¿½o = request.getParameter("txtAnio");
         	String materia = request.getParameter("txtMateria");
         	
         	Curso curso = new Curso();
         	curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
         	//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
         	curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        	curso.setAño(Integer.parseInt(año));
+        	curso.setAnio(Integer.parseInt(aï¿½o));
         	
         	Boolean result = false;
         	try {
@@ -247,7 +247,7 @@ public class ServletCurso extends HttpServlet {
         		//request.setAttribute("Result_Docente", curso.getDocente().getApellido());
         		request.setAttribute("Result_Materia", curso.getMateria().getNombre());
         		request.setAttribute("Result_Cuatrimestre", curso.getCuatrimestre());
-        		request.setAttribute("Result_Año", curso.getAño());
+        		request.setAttribute("Result_Anio", curso.getAnio());
         		
         		
         		if(request.getParameter("btnBurscarCurso_EliminarCurso") != null)
@@ -273,14 +273,14 @@ public class ServletCurso extends HttpServlet {
         		System.out.println("btnBurscarCurso_Inscripcion");
         		//String docente = "2";
         		String cuatrimestre = request.getParameter("txtCuatrimestre");
-        		String año = request.getParameter("txtAnio");
+        		String aï¿½o = request.getParameter("txtAnio");
         		String materia = request.getParameter("txtMateria");
         		
         		Curso curso = new Curso();
         		curso.setMateria(materiaDao.read(Integer.parseInt(materia)));
         		//curso.setDocente(docenteDao.read(Integer.parseInt(docente)));
         		curso.setCuatrimestre(Integer.parseInt(cuatrimestre));
-        		curso.setAño(Integer.parseInt(año));
+        		curso.setAnio(Integer.parseInt(aï¿½o));
         		
         		Boolean result = false;
         		if(usuario.getRol() == 1)
@@ -328,12 +328,12 @@ public class ServletCurso extends HttpServlet {
         			{
         				if(!cursoAlumno.insert(idCurso,a.getID()))
         				{
-        					System.out.println("Falló la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
+        					System.out.println("Fallï¿½ la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
         				}        			
         			}
         			idx++;
         		}
-        		String success  = "¡Se han inscripto los alumnos con exito!";
+        		String success  = "ï¿½Se han inscripto los alumnos con exito!";
 				System.out.println(success);
 				request.setAttribute("Exito", success);
 				redirectJSP = "/Exito.jsp";
@@ -356,7 +356,7 @@ public class ServletCurso extends HttpServlet {
         		
         		if(cursoDao.baja(ID))
         		{
-        			String success  = "¡Se ha eliminado el curso con exito!";
+        			String success  = "ï¿½Se ha eliminado el curso con exito!";
         			System.out.println(success);
         			request.setAttribute("Exito", success);
         			redirectJSP = "/Exito.jsp";

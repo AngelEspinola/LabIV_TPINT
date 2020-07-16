@@ -67,7 +67,7 @@
                                 		 <tr>
                                 		 <form action="ServletCalificar" method="get">
 			                                <td><%=c.getMateria().getNombre()%> <input type="hidden" name="IDCurso" value="<%=c.getID()%>"></td>
-			                                <td><%=c.getAño()%></td>
+			                                <td><%=c.getAnio()%></td>
 			                                <td><%=c.getCuatrimestre() == 1 ? "Primer Cuatrimestre" : "Segundo Cuatrimestre"%></td>
 			                                <td><%=c.getDocente().getApellido() + ", " + c.getDocente().getNombre()%></td>
 			                                <td>

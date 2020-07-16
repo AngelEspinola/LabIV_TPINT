@@ -37,7 +37,7 @@
 	String materia = "";
   	String docente = "";
   	int cuatrimestre = 0;
-  	int año = 0;
+  	int anio = 0;
   	int ID = 0;
   	
   	if (request.getAttribute("Result_ID") != null)
@@ -56,9 +56,9 @@
 	{
     	cuatrimestre = (int)request.getAttribute("Result_Cuatrimestre");
 	}
-  	if (request.getAttribute("Result_Año") != null)
+  	if (request.getAttribute("Result_Anio") != null)
 	{
-    	año = (int)request.getAttribute("Result_Año");
+    	anio = (int)request.getAttribute("Result_Anio");
 	}
 %>
 <jsp:include page="Menu.jsp"></jsp:include>
@@ -115,7 +115,7 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>       
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="txtAnio">Año</label>
+                            <label for="txtAnio">AÃ±o</label>
                             <input type="number" class="form-control" id="txtAnio" name="txtAnio" value="" required>                         
                             <div class="valid-feedback">Completo!</div>
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
@@ -150,8 +150,8 @@
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="txtAnio">Año</label>
-                            <label class="form-control disabled" id="txtAnio"><%=año%></label>
+                            <label for="txtAnio">AÃ±o</label>
+                            <label class="form-control disabled" id="txtAnio"><%=anio%></label>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="txtCuatrimestre">Cuatrimestre</label>

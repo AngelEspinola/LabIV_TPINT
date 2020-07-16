@@ -36,7 +36,7 @@
   	String cuatrimestre = "";
   	int docente = 0;
   	int materia = 0;
-  	int año = 0;
+  	int anio = 0;
   	int ID = 0;
   	
   	if (request.getAttribute("Result_ID") != null)
@@ -47,9 +47,9 @@
 	{
     	cuatrimestre = request.getAttribute("Result_Cuatrimestre").toString();
 	}
-  	if (request.getAttribute("Result_Año") != null)
+  	if (request.getAttribute("Result_Anio") != null)
 	{
-    	año = (int)request.getAttribute("Result_Año");
+    	anio = (int)request.getAttribute("Result_Anio");
 	}
   	if (request.getAttribute("Result_Docente") != null)
 	{
@@ -115,7 +115,7 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>       
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="txtAnio">Año</label>
+                            <label for="txtAnio">AÃ±o</label>
                             <input type="number" class="form-control" id="txtAnio" name="txtAnio" value="" required>                         
                             <div class="valid-feedback">Completo!</div>
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
@@ -197,9 +197,9 @@
                         <div class="col-md-6 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="txtAnioNuevo">Año</label>
+                                    <label class="input-group-text" for="txtAnioNuevo">AÃ±o</label>
                                 </div>
-                                <input type="number" class="form-control" name="txtAnioNuevo" value="<%=año%>" id="txtAnioNuevo" required>
+                                <input type="number" class="form-control" name="txtAnioNuevo" value="<%=anio%>" id="txtAnioNuevo" required>
                                 <div class="valid-feedback">Completo!</div>
                                 <div class="invalid-feedback"> Por favor completar este dato.</div>
                             </div>                        
