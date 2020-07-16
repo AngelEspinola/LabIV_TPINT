@@ -59,25 +59,15 @@ public class ServletLogin extends HttpServlet {
 			login = UDAO.buscarUsuario(name, pass);
 			if(login !=null)
 			{
-				//System.out.println("name:"+ login.getName());
-				//System.out.println("pass:"+ login.getPass());
-				//System.out.println("AlumnoDni:"+ alumno.getDni());
-				//System.out.println("txtDni:"+ request.getParameter("txtDni"))
-				//if(login.getName() == request.getParameter("txtName") && login.getPass() == request.getParameter("txtPass"))
-					request.getSession().setAttribute("Login",login);
-					if(login.getRol() == 2)
-					{
+				request.getSession().setAttribute("Login",login);
 						user = DDAO.read(login.getDni());
-						request.getSession().setAttribute("User", user);										
-					}
-					RequestDispatcher rq = request.getRequestDispatcher("/Main.jsp");
-					rq.include(request, response);
-				
-				
+				request.getSession().setAttribute("User", user);
+				RequestDispatcher rq = request.getRequestDispatcher("/ServletReporte");
+				rq.include(request, response);
 			}
 			else
 			{
-				String log = "Usuario o contraseña invalidos";
+				String log = "Usuario o contraseÃ±a invalidos";
 				request.setAttribute("Error",log);
 				RequestDispatcher rq = request.getRequestDispatcher("/Login.jsp");
 				rq.include(request, response);
