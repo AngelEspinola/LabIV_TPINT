@@ -12,14 +12,16 @@ import Entidades.Curso;
 import Entidades.Materia;
 
 public class CursoDaoImpl implements CursoDao{
-	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, año, materia) VALUES(?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, aï¿½o, materia) VALUES(?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM bdTPInt.Docentes WHERE Dni = ?";
-	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, año=?, materia=? Where ID=?";
+	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, aï¿½o=?, materia=? Where ID=?";
 	private static final String baja   = "UPDATE bdTPInt.cursos SET Baja=1 WHERE ID=?";
 	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE Baja=0";
 	private static final String readallforID = "SELECT * FROM bdTPInt.cursos WHERE Baja=0 AND docente=?";
-	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND año=? AND baja=0";
-	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND año=? AND baja=0 AND docente=?";
+	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND aï¿½o=? AND baja=0";
+	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND aï¿½o=? AND baja=0 AND docente=?";
+	private static final String readFilter = "SELECT * FROM bdtpint.cursos WHERE aï¿½o BETWEEN ? AND ? AND materia=?";
+	private static final String readFilterDate = "SELECT * FROM bdtpint.cursos WHERE aï¿½o BETWEEN ? AND ?";
 	
 	public boolean insert(Curso curso) {
 		// TODO Auto-generated method stub
@@ -31,7 +33,7 @@ public class CursoDaoImpl implements CursoDao{
 			statement = conexion.prepareStatement(insert);
 			statement.setInt(1, curso.getDocente().getID());
 			statement.setInt(2, curso.getCuatrimestre());
-			statement.setInt(3, curso.getAño());
+			statement.setInt(3, curso.getAï¿½o());
 			statement.setInt(4, curso.getMateria().getId());
 			
 			if(statement.executeUpdate() > 0)
@@ -65,7 +67,7 @@ public class CursoDaoImpl implements CursoDao{
 				statement = conexion.prepareStatement(modify);
 				statement.setInt(1, curso.getDocente().getID());
 				statement.setInt(2, curso.getCuatrimestre());
-				statement.setInt(3, curso.getAño());
+				statement.setInt(3, curso.getAï¿½o());
 				statement.setInt(4, curso.getMateria().getId());
 				statement.setInt(5, curso.getID());
 				if(statement.executeUpdate() > 0)
@@ -181,7 +183,7 @@ public class CursoDaoImpl implements CursoDao{
 		PreparedStatement statement = conexion.prepareStatement(read);
 		statement.setInt(1, curso.getMateria().getId());
 		statement.setInt(2, curso.getCuatrimestre());
-		statement.setInt(3, curso.getAño());
+		statement.setInt(3, curso.getAï¿½o());
 		ResultSet resultSet = statement.executeQuery();
 		try
 		{	
@@ -216,7 +218,7 @@ public class CursoDaoImpl implements CursoDao{
 		PreparedStatement statement = conexion.prepareStatement(readforID);
 		statement.setInt(1, curso.getMateria().getId());
 		statement.setInt(2, curso.getCuatrimestre());
-		statement.setInt(3, curso.getAño());
+		statement.setInt(3, curso.getAï¿½o());
 		statement.setInt(4, ID);
 		ResultSet resultSet = statement.executeQuery();
 		try
@@ -244,6 +246,60 @@ public class CursoDaoImpl implements CursoDao{
 		return response;
 	}
 	
+	public ArrayList<Curso> readFilterDate(int i, int f) {
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Curso> cursos = new ArrayList<Curso>();
+		Conexion conexion = Conexion.getConexion();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readFilterDate);
+			statement.setInt(1, i);
+			statement.setInt(2, f);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				Curso nuevoCurso = new Curso();
+				if(getCurso(resultSet, nuevoCurso))
+				{
+					cursos.add(nuevoCurso);
+				}
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return cursos;
+	}
+	public ArrayList<Curso> readFilter(int i, int f, int m) {
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Curso> cursos = new ArrayList<Curso>();
+		Conexion conexion = Conexion.getConexion();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readFilter);
+			statement.setInt(1, i);
+			statement.setInt(2, f);
+			statement.setInt(3, m);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				Curso nuevoCurso = new Curso();
+				if(getCurso(resultSet, nuevoCurso))
+				{
+					cursos.add(nuevoCurso);
+				}
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return cursos;
+	}
+	
 	private Boolean getCurso(ResultSet result, Curso curso) throws SQLException
 	{
 		Boolean response = true;
@@ -253,9 +309,15 @@ public class CursoDaoImpl implements CursoDao{
 		{
 			curso.setID(result.getInt("ID"));
 			curso.setDocente(docenteDAO.readID(result.getInt("docente")));
-			curso.setAño(result.getInt("año"));
+			curso.setAï¿½o(result.getInt("aï¿½o"));
 			curso.setCuatrimestre(result.getInt("cuatrimestre"));
-			curso.setMateria(materiaDAO.read(result.getInt("materia")));			
+			curso.setMateria(materiaDAO.read(result.getInt("materia")));
+			curso.setAprobados(result.getInt("aprobados"));
+			curso.setDesaprobados(result.getInt("desaprobados"));
+			curso.setPorcentajeAprobados(result.getFloat("porcentajeAprobados"));
+			curso.setPorcentajeDesaprobados(result.getFloat("porcentajeDesaprobados"));
+			curso.setPromedioParciales(result.getFloat("promedio1"));
+			curso.setPromedioTotal(result.getFloat("promedio2"));
 		}
 		catch(Exception e)
 		{

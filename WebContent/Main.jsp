@@ -1,3 +1,6 @@
+<%@page import="Entidades.Curso"%>
+<%@page import="Entidades.Materia"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,6 +25,23 @@
 </head>
 <body class="fondo">
 <jsp:include page="Menu.jsp"></jsp:include>
+<%
+ArrayList<Curso> cursos = null;
+ArrayList<Materia> materias = null;
+Materia materia = null;
+if(application.getAttribute("Cursos")!=null)
+{
+	cursos	= (ArrayList<Curso>)application.getAttribute("Cursos");
+}
+if(application.getAttribute("Materias")!=null)
+{
+	materias	= (ArrayList<Materia>)application.getAttribute("Materias");
+}
+if(application.getAttribute("Materia")!=null)
+{
+	materia	= (Materia)application.getAttribute("Materia");
+}
+%>
     <div class="row">
         <br>
     </div>
@@ -32,52 +52,97 @@
                 <h5 class="card-title">Pagina principal</h5>
             </div>
             <div class=" card-body">
+            <form class="needs-validation" name="Main" action="ServletReporte?Filtro=1" method="post">
                 <div class="row">
-                    <div class="col-md-4 mb-6">
+                    <div class="col-md-6 mb-9">
                         <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="A�o a buscar.." aria-label="" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="button" id="button-addon2">Buscar</button>
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="txtDesde">Filtro por año</label>
                             </div>
+                            <input type="number" class="form-control" placeholder="Desde.." id="txtDesde" name="txtDesde" value="<%=application.getAttribute("Desde")!=null?application.getAttribute("Desde"):""%>" aria-label="" aria-describedby="btnFiltro">
+                            <input type="number" class="form-control" placeholder="Hasta.." id="txtHasta" name="txtHasta" value="<%=application.getAttribute("Hasta")!=null?application.getAttribute("Hasta"):""%>" aria-label="" aria-describedby="btnFiltro">
                         </div>
                     </div>
                     <div class="col-8"></div>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="ddlMateria">Materia</label>
+                        </div>
+                        <select class="custom-select" id="ddlMateria" name="ddlMateria" aria-label="" aria-describedby="btnFiltro">
+                            <option selected value="<%=materia!=null?materia.getId():"0"%>" ><%=materia!=null?materia.getNombre():"Todas" %></option>
+                            <%
+                            if ( materias != null)
+                        	{
+                            %>
+                            	<option value="0"> Todas </option>
+                            <%
+                            	for(Materia m : materias)
+                            	{
+                            %>
+                            		<option value="<%=m.getId()%>"> <%=m.getNombre()%> </option>
+                            <%
+                            	}
+                        	}
+                            else
+                            {
+                            %>
+                        		<option value="" > Selecciona... </option>
+                        	<%
+                            }
+                            %>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" id="btnFiltro" name="btnFiltro" value="aceptar">Buscar</button>
+                        </div>
+                    </div>                        
+                </div>
+            </form>
                   <br>
                 <table id="tabla" class="table table-striped table-bordered table-responsive-sm table-responsive-md" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Año</th>
                             <th>Cuatrimestre</th>
                             <th>Materia</th>
                             <th>Docente</th>
                             <th>Aprobados</th>
+                            <th>Desaprobados</th>
                             <th>Aprobados %</th>
-                            <th>Notas promedio</th>
+                            <th>Desaprobados %</th>
+                            <th>Promedio</th>
+                            <th>Promedio total</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <%
+                    if(cursos != null)
+                    {
+                    for(Curso c : cursos)
+                    {
+                   	%>
                         <tr>
-                            <td>1</td>
-                            <td>Laboratorio 4</td>
-                            <td>Tamara Herrera</td>
-                            <td>20</td>
-                            <td>95 %</td>
-                            <td>8</td>
+                            <td><%=c.getAño()%></td>
+                            <td><%=c.getCuatrimestre()%></td>
+                            <td><%=c.getMateria().getNombre()%></td>
+                            <td><%=c.getDocente().getApellido()%> <%=c.getDocente().getNombre()%></td>
+                            <td><%=c.getAprobados()%></td>
+                            <td><%=c.getDesaprobados()%></td>
+                            <td><%=c.getPorcentajeAprobados()%></td>
+                            <td><%=c.getPorcentajeDesaprobados()%></td>
+                            <td><%=c.getPromedioParciales()%></td>
+                            <td><%=c.getPromedioTotal()%></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Laboratorio 4</td>
-                            <td>Tamara Herrera</td>
-                            <td>--</td>
-                            <td>-- %</td>
-                            <td>--</td>
-                        </tr>
+                    <%
+                    }
+                    }
+                    %>
                     </tbody>
                     <tfoot>
                         
                     </tfoot>
                 </table>
-
             </div>
             <div class=" card-footer">
             </div>

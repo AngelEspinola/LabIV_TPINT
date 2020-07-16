@@ -79,36 +79,6 @@ LOCK TABLES `alumnos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `alumnoxcurso`
---
-
-DROP TABLE IF EXISTS `alumnoxcurso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `alumnoxcurso` (
-  `id_curso` int(11) NOT NULL,
-  `id_alumno` int(11) NOT NULL,
-  `nota1` int(11) DEFAULT NULL,
-  `nota2` int(11) DEFAULT NULL,
-  `recuperatorio1` int(11) DEFAULT NULL,
-  `recuperatorio2` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_curso`,`id_alumno`),
-  KEY `FK_Alumnos` (`id_alumno`),
-  CONSTRAINT `alumnoxcurso_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`ID`),
-  CONSTRAINT `alumnoxcurso_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `alumnoxcurso`
---
-
-LOCK TABLES `alumnoxcurso` WRITE;
-/*!40000 ALTER TABLE `alumnoxcurso` DISABLE KEYS */;
-/*!40000 ALTER TABLE `alumnoxcurso` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cursos`
 --
 
@@ -121,6 +91,12 @@ CREATE TABLE `cursos` (
   `cuatrimestre` int(11) NOT NULL,
   `año` int(11) NOT NULL,
   `materia` int(11) NOT NULL,
+  `aprobados` int(11) NOT NULL DEFAULT '0',
+  `porcentajeAprobados` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `desaprobados` int(11) NOT NULL DEFAULT '0',
+  `porcentajeDesaprobados` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `promedio1` decimal(18,2) NULL DEFAULT '0.00',
+  `promedio2` decimal(18,2) NOT NULL DEFAULT '0.00',
   `baja` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `cursos_FK_idx` (`docente`),
@@ -140,6 +116,59 @@ INSERT INTO `cursos` VALUES (4,1,2,2020,7,0);
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `alumnoxcurso`
+--
+
+DROP TABLE IF EXISTS `alumnoxcurso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alumnoxcurso` (
+  `id_curso` int(11) NOT NULL,
+  `id_alumno` int(11) NOT NULL,
+  `nota1` int(11) DEFAULT NULL,
+  `nota2` int(11) DEFAULT NULL,
+  `recuperatorio1` int(11) DEFAULT NULL,
+  `recuperatorio2` int(11) DEFAULT NULL,
+  `PromedioTotal` decimal(18,2) AS
+((ifnull(`nota1`,0)+ifnull(`nota2`,0)+ifnull(`recuperatorio1`,0)+ifnull(`recuperatorio2`,0))/
+(if(ifnull(`nota1`,0)>0,1,0)+if(ifnull(`nota2`,0)>0,1,0)+if(ifnull(`recuperatorio1`,0)>0,1,0)+if(ifnull(`recuperatorio2`,0)>0,1,0))) STORED NULL,
+  `PromedioParciales` decimal(18,2) AS
+(((ifnull(`nota1`,0))+ifnull(`nota2`,0))/(if(ifnull(`nota1`,0)>0,1,0)+if(ifnull(`nota2`,0)>0,1,0)))STORED NULL,
+  `Promedio` decimal(18,2) AS
+((if(ifnull(`recuperatorio1`,0)>0,`recuperatorio1`,ifnull(`nota1`,0))+if(ifnull(`recuperatorio2`,0)>0,`recuperatorio2`,ifnull(`nota2`,0)))/
+(if(if(ifnull(`recuperatorio1`,0)>0,`recuperatorio1`,ifnull(`nota1`,0))>0,1,0)+if(if(ifnull(`recuperatorio2`,0)>0,`recuperatorio2`,ifnull(`nota2`,0))>0,1,0)))STORED NULL,
+  `aprobado` int(11) AS (IF((ifnull(`Promedio`,0) >= 6),_utf8mb4'1',_utf8mb4'0'))STORED,
+  `estado` bit(1) DEFAULT b'1',
+  PRIMARY KEY (`id_curso`,`id_alumno`),
+  KEY `FK_Alumnos` (`id_alumno`),
+  CONSTRAINT `alumnoxcurso_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`ID`),
+  CONSTRAINT `alumnoxcurso_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DELIMITER ;;
+DROP TRIGGER IF EXISTS `calcularPromedio`;
+CREATE TRIGGER `calcularPromedio` AFTER UPDATE ON `alumnoXcurso`
+FOR EACH ROW
+	update `cursos` set
+    `promedio1` = (SELECT AVG(`promedio`) FROM `alumnoXcurso` WHERE `alumnoXcurso`.`id_curso` = `ID`),
+    `promedio2` = (SELECT AVG(`PromedioTotal`) FROM `alumnoXcurso` WHERE `alumnoXcurso`.`id_curso` = `ID`),
+    `aprobados` = (SELECT COUNT(DISTINCT `alumnoXcurso`.`id_alumno`) FROM `alumnoXcurso` WHERE `alumnoXcurso`.`id_curso` = `ID` AND `alumnoXcurso`.`aprobado`= 1),
+    `desaprobados` = (SELECT COUNT(DISTINCT `alumnoXcurso`.`id_alumno`) FROM `alumnoXcurso` WHERE `alumnoXcurso`.`id_curso` = `ID` AND `alumnoXcurso`.`aprobado`= 0),
+    `porcentajeAprobados` = ifnull(ifnull(`aprobados`,0)/(ifnull(`aprobados`,0)+ifnull(`desaprobados`,0)),0)*100,
+    `porcentajeDesaprobados` = ifnull(ifnull(`desaprobados`,0)/(ifnull(`aprobados`,0)+ifnull(`desaprobados`,0)),0)*100
+    where `ID` = new.`id_curso`;
+DELIMITER ;
+
+--
+-- Dumping data for table `alumnoxcurso`
+--
+
+LOCK TABLES `alumnoxcurso` WRITE;
+/*!40000 ALTER TABLE `alumnoxcurso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alumnoxcurso` ENABLE KEYS */;
+UNLOCK TABLES;
 --
 -- Table structure for table `docentes`
 --

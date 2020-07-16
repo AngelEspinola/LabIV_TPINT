@@ -14,4 +14,6 @@ public interface CursoDao {
 	public Boolean read(Curso curso, int ID) throws SQLException;
 	public List<Curso> readAll();
 	public List<Curso> readAll(int ID);
+	public List<Curso> readFilterDate(int i, int f);
+	public List<Curso> readFilter(int i, int f, int m);
 }
