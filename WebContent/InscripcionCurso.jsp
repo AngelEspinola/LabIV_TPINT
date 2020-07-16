@@ -121,7 +121,7 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>       
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="txtAnio">Año</label>
+                            <label for="txtAnio">AÃ±o</label>
                             <input type="number" class="form-control" id="txtAnio" name="txtAnio" value="" required>                         
                             <div class="valid-feedback">Completo!</div>
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
@@ -153,8 +153,8 @@
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="txtAnio">Año</label>
-                            <label class="form-control disabled" id="lblAnio"><%=c!=null?c.getAño():""%></label>
+                            <label for="txtAnio">AÃ±o</label>
+                            <label class="form-control disabled" id="lblAnio"><%=c!=null?c.getAnio():""%></label>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="txtCuatrimestre">Cuatrimestre</label>

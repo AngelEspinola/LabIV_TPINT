@@ -123,7 +123,7 @@ if(application.getAttribute("Materia")!=null)
                     {
                    	%>
                         <tr>
-                            <td><%=c.getAño()%></td>
+                            <td><%=c.getAnio()%></td>
                             <td><%=c.getCuatrimestre()%></td>
                             <td><%=c.getMateria().getNombre()%></td>
                             <td><%=c.getDocente().getApellido()%> <%=c.getDocente().getNombre()%></td>

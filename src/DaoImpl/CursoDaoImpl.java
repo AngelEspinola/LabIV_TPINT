@@ -12,16 +12,16 @@ import Entidades.Curso;
 import Entidades.Materia;
 
 public class CursoDaoImpl implements CursoDao{
-	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, a�o, materia) VALUES(?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, anio, materia) VALUES(?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM bdTPInt.Docentes WHERE Dni = ?";
-	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, a�o=?, materia=? Where ID=?";
+	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, ani=?, materia=? Where ID=?";
 	private static final String baja   = "UPDATE bdTPInt.cursos SET Baja=1 WHERE ID=?";
 	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE Baja=0";
 	private static final String readallforID = "SELECT * FROM bdTPInt.cursos WHERE Baja=0 AND docente=?";
-	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND a�o=? AND baja=0";
-	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND a�o=? AND baja=0 AND docente=?";
-	private static final String readFilter = "SELECT * FROM bdtpint.cursos WHERE a�o BETWEEN ? AND ? AND materia=?";
-	private static final String readFilterDate = "SELECT * FROM bdtpint.cursos WHERE a�o BETWEEN ? AND ?";
+	private static final String read = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND anio=? AND baja=0";
+	private static final String readforID = "SELECT * FROM bdTPInt.cursos WHERE materia=? AND cuatrimestre=? AND anio=? AND baja=0 AND docente=?";
+	private static final String readFilter = "SELECT * FROM bdtpint.cursos WHERE anio BETWEEN ? AND ? AND materia=?";
+	private static final String readFilterDate = "SELECT * FROM bdtpint.cursos WHERE anio BETWEEN ? AND ?";
 	
 	public boolean insert(Curso curso) {
 		// TODO Auto-generated method stub
@@ -33,7 +33,7 @@ public class CursoDaoImpl implements CursoDao{
 			statement = conexion.prepareStatement(insert);
 			statement.setInt(1, curso.getDocente().getID());
 			statement.setInt(2, curso.getCuatrimestre());
-			statement.setInt(3, curso.getA�o());
+			statement.setInt(3, curso.getAnio());
 			statement.setInt(4, curso.getMateria().getId());
 			
 			if(statement.executeUpdate() > 0)
@@ -67,7 +67,7 @@ public class CursoDaoImpl implements CursoDao{
 				statement = conexion.prepareStatement(modify);
 				statement.setInt(1, curso.getDocente().getID());
 				statement.setInt(2, curso.getCuatrimestre());
-				statement.setInt(3, curso.getA�o());
+				statement.setInt(3, curso.getAnio());
 				statement.setInt(4, curso.getMateria().getId());
 				statement.setInt(5, curso.getID());
 				if(statement.executeUpdate() > 0)
@@ -183,7 +183,7 @@ public class CursoDaoImpl implements CursoDao{
 		PreparedStatement statement = conexion.prepareStatement(read);
 		statement.setInt(1, curso.getMateria().getId());
 		statement.setInt(2, curso.getCuatrimestre());
-		statement.setInt(3, curso.getA�o());
+		statement.setInt(3, curso.getAnio());
 		ResultSet resultSet = statement.executeQuery();
 		try
 		{	
@@ -218,7 +218,7 @@ public class CursoDaoImpl implements CursoDao{
 		PreparedStatement statement = conexion.prepareStatement(readforID);
 		statement.setInt(1, curso.getMateria().getId());
 		statement.setInt(2, curso.getCuatrimestre());
-		statement.setInt(3, curso.getA�o());
+		statement.setInt(3, curso.getAnio());
 		statement.setInt(4, ID);
 		ResultSet resultSet = statement.executeQuery();
 		try
@@ -309,7 +309,7 @@ public class CursoDaoImpl implements CursoDao{
 		{
 			curso.setID(result.getInt("ID"));
 			curso.setDocente(docenteDAO.readID(result.getInt("docente")));
-			curso.setA�o(result.getInt("a�o"));
+			curso.setAnio(result.getInt("anio"));
 			curso.setCuatrimestre(result.getInt("cuatrimestre"));
 			curso.setMateria(materiaDAO.read(result.getInt("materia")));
 			curso.setAprobados(result.getInt("aprobados"));

@@ -89,7 +89,7 @@ CREATE TABLE `cursos` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `docente` int(11) NOT NULL,
   `cuatrimestre` int(11) NOT NULL,
-  `año` int(11) NOT NULL,
+  `anio` int(11) NOT NULL,
   `materia` int(11) NOT NULL,
   `aprobados` int(11) NOT NULL DEFAULT '0',
   `porcentajeAprobados` decimal(18,2) NOT NULL DEFAULT '0.00',

@@ -4,7 +4,7 @@ public class Curso {
 	private int ID;
 	private Materia Materia;
 	private int 	Cuatrimestre;
-	private int 	A�o; 
+	private int 	Anio; 
 	private Docente Docente;
 	private List<Alumno> Alumnos;
 	private int   Aprobados;
@@ -14,11 +14,11 @@ public class Curso {
 	private float PromedioParciales;
 	private float PromedioTotal;
 	
-	public Curso(Materia materia, int cuatrimestre, int a�o, Entidades.Docente docente, List<Entidades.Alumno> alumnos) {
+	public Curso(Materia materia, int cuatrimestre, int anio, Entidades.Docente docente, List<Entidades.Alumno> alumnos) {
 		super();
 		Materia = materia;
 		Cuatrimestre = cuatrimestre;
-		A�o 	= a�o;
+		Anio 	= anio;
 		Docente = docente;
 		Alumnos = alumnos;
 		Aprobados = 0;
@@ -30,12 +30,12 @@ public class Curso {
 	}
 	
 
-	public Curso(Materia materia, int cuatrimestre, int año, Entidades.Docente docente, int aprobados, int desaprobados, float porcentajeAprobados, float porcentajeDesaprobados,
+	public Curso(Materia materia, int cuatrimestre, int anio, Entidades.Docente docente, int aprobados, int desaprobados, float porcentajeAprobados, float porcentajeDesaprobados,
 			float promedioParciales, float promedioTotal) {
 		super();
 		Materia				= materia;
 		Cuatrimestre		= cuatrimestre;
-		Año					= año;
+		Anio				= anio;
 		Docente				= docente;
 		Aprobados			= aprobados;
 		Desaprobados		= desaprobados;
@@ -121,11 +121,11 @@ public class Curso {
 	public void setCuatrimestre(int cuatrimestre) {
 		Cuatrimestre = cuatrimestre;
 	}
-	public int getA�o() {
-		return A�o;
+	public int getAnio() {
+		return Anio;
 	}
-	public void setA�o(int a�o) {
-		A�o = a�o;
+	public void setAnio(int anio) {
+		Anio = anio;
 	}
 	public Docente getDocente() {
 		return Docente;
