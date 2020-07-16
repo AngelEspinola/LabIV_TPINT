@@ -65,7 +65,7 @@ public class ServletCalificar extends HttpServlet {
 				String error = "Whoops! Algo fallo al procesar la peticion. Por favor intente nuevamente mas tarde.";
 				System.out.println(error);
 				request.setAttribute("Error", error);
-				RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
+				RequestDispatcher rq=request.getRequestDispatcher("/ServletReporte");
 				rq.include(request, response);
 			}
 		}
@@ -96,19 +96,19 @@ public class ServletCalificar extends HttpServlet {
 				{
 					System.out.println(a.getNombre());
 					parcialUno = Integer.parseInt(request.getParameter("txt1Nota"+Integer.toString(a.getIdAlumno())));
-					System.out.println("Nota 1° parcial: "+ parcialUno);
+					System.out.println("Nota 1ï¿½ parcial: "+ parcialUno);
 				
 				
 					parcialDos = Integer.parseInt(request.getParameter("txt2Nota"+Integer.toString(a.getIdAlumno())));
-					System.out.println("Nota 2° parcial:"+ parcialDos);
+					System.out.println("Nota 2ï¿½ parcial:"+ parcialDos);
 				
 				
 					recuUno = Integer.parseInt(request.getParameter("txt1Recu"+Integer.toString(a.getIdAlumno())));
-					System.out.println("Nota 1° Recuperatorio: "+ recuUno);
+					System.out.println("Nota 1ï¿½ Recuperatorio: "+ recuUno);
 				
 				
 					recuDos = Integer.parseInt(request.getParameter("txt2Recu"+Integer.toString(a.getIdAlumno())));
-					System.out.println("Nota 2° Recuperatorio: "+ recuDos);
+					System.out.println("Nota 2ï¿½ Recuperatorio: "+ recuDos);
 					
 					estado = a.getEstado(); 
 					System.out.println("Estado: "+ estado);
@@ -130,7 +130,7 @@ public class ServletCalificar extends HttpServlet {
 					aux.setEstado(estado);
 					if( ADAO.modify(aux))
 					{
-						String success  = "¡Se ha calificado al curso con exito!";
+						String success  = "ï¿½Se ha calificado al curso con exito!";
 						System.out.println(success);
 						request.setAttribute("Exito", success);
 						redirectJSP = "/Exito.jsp";

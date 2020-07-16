@@ -198,7 +198,7 @@ public class ServletAlumnoModificar extends HttpServlet {
 						String dniOrigin = getServletContext().getAttribute("DNIOrigin").toString();
 						if(DDao.modify(alumno, dniOrigin))
 						{
-							String success  = "¡El alumno ha sido modificado con exito!";
+							String success  = "ï¿½El alumno ha sido modificado con exito!";
 							System.out.println(success);
 							request.setAttribute("Exito", success);
 							RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
@@ -236,13 +236,13 @@ public class ServletAlumnoModificar extends HttpServlet {
 			{
 				String log = "Lo siento, no tiene permiso Administrador.";
 				request.setAttribute("Log",log);
-				RequestDispatcher rq = request.getRequestDispatcher("/Main.jsp");
+				RequestDispatcher rq = request.getRequestDispatcher("/ServletReporte");
 				rq.include(request, response);				
 			}
 		}
 		else
 		{
-			String log = "Lo siento, debe iniciar Sesión.";
+			String log = "Lo siento, debe iniciar Sesiï¿½n.";
 			request.setAttribute("Log",log);
 			RequestDispatcher rq = request.getRequestDispatcher("/Login.jsp");
 			rq.include(request, response);			
