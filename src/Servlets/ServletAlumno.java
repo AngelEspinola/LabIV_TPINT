@@ -205,7 +205,7 @@ public class ServletAlumno extends HttpServlet
 					
 					if(DDao.baja(alumno))
 					{
-						String success  = "�El alumno ha sido eliminado con exito!";
+						String success  = "El alumno ha sido eliminado con exito!";
 						System.out.println(success);
 						request.setAttribute("Exito", success);
 						RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
