@@ -110,10 +110,10 @@
             <span aria-hidden="true">No</span>
           </button>
         </div>
-        <div class="modal-body">Seleccione "Cerrar sesion" a continuacion si esta listo para finalizar su sesion actual.</div>
+        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si esta listo para finalizar su sesión actual.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="ServletLogin?Param=1">Cerrar sesion</a>
+          <a class="btn btn-primary" href="ServletLogin?Param=1">Cerrar sesión</a>
         </div>
       </div>
     </div>
