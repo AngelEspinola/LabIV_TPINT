@@ -59,7 +59,7 @@ public class ServletDocente extends HttpServlet {
 				
 				if(DDao.insert(docente))
 				{
-					String success  = "¡El docente ha sido generado con exito!";
+					String success  = "El docente ha sido generado con exito!";
 					System.out.println(success);
 					request.setAttribute("Exito", success);
 					RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
@@ -132,7 +132,7 @@ public class ServletDocente extends HttpServlet {
 					
 					if(DDao.baja(docente))
 					{
-						String success  = "¡El docente ha sido eliminado con exito!";
+						String success  = "El docente ha sido eliminado con exito!";
 						System.out.println(success);
 						request.setAttribute("Exito", success);
 						RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
@@ -428,7 +428,7 @@ public class ServletDocente extends HttpServlet {
 				String dniOrigin = getServletContext().getAttribute("DNIOrigin").toString();
 				if(DDao.modify(docente, dniOrigin))
 				{
-					String success  = "¡El docente ha sido modificado con exito!";
+					String success  = "El docente ha sido modificado con exito!";
 					System.out.println(success);
 					request.setAttribute("Exito", success);
 					RequestDispatcher rq=request.getRequestDispatcher("/Exito.jsp");
@@ -448,7 +448,7 @@ public class ServletDocente extends HttpServlet {
 				System.out.println(error);
 				request.setAttribute("Error", error);
 			}
-			RequestDispatcher rq=request.getRequestDispatcher("Main.jsp");
+			RequestDispatcher rq=request.getRequestDispatcher("ServletReporte");
 			rq.include(request, response);
 		}
 		else

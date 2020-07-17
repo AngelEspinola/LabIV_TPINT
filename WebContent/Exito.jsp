@@ -46,14 +46,14 @@
 					<img alt="" src="https://images.vexels.com/media/users/3/127294/isolated/preview/62f9e10b937aeaaaebd9a0d7e4bbc3a3-empresario-celebrando-silueta-de---xito-by-vexels.png">
 				
                 <div >
-                <form action="Main.jsp">
+                <form action="ServletReporte">
                     
                 </form>
                 </div>
             </div>
             <div class=" card-body">
                 <div  style="text-align:center">
-	                    <a class="navbar-brand" href="Main.jsp">
+	                    <a class="navbar-brand" href="ServletReporte">
 	                    	<button class="btn btn-success" type="button" id="button-addon2">Volver al menu principal</button>
 	                    </a>
                     <div class="col-8"></div>

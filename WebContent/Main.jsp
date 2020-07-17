@@ -57,7 +57,7 @@ if(application.getAttribute("Materia")!=null)
                     <div class="col-md-6 mb-9">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="txtDesde">Filtro por año</label>
+                                <label class="input-group-text" for="txtDesde">Filtro por fecha</label>
                             </div>
                             <input type="number" class="form-control" placeholder="Desde.." id="txtDesde" name="txtDesde" value="<%=application.getAttribute("Desde")!=null?application.getAttribute("Desde"):""%>" aria-label="" aria-describedby="btnFiltro">
                             <input type="number" class="form-control" placeholder="Hasta.." id="txtHasta" name="txtHasta" value="<%=application.getAttribute("Hasta")!=null?application.getAttribute("Hasta"):""%>" aria-label="" aria-describedby="btnFiltro">
@@ -103,7 +103,7 @@ if(application.getAttribute("Materia")!=null)
                 <table id="tabla" class="table table-striped table-bordered table-responsive-sm table-responsive-md" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Año</th>
+                            <th>Fecha</th>
                             <th>Cuatrimestre</th>
                             <th>Materia</th>
                             <th>Docente</th>

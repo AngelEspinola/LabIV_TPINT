@@ -25,7 +25,7 @@
 <header>
 <div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
-   		<a class="navbar-brand" href="Main.jsp">Inicio</a>
+   		<a class="navbar-brand" href="ServletReporte">Inicio</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
        	<span class="navbar-toggler-icon"></span>
        	</button>
@@ -103,7 +103,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">ï¿½Listo para salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">No</span>
           </button>

@@ -328,12 +328,12 @@ public class ServletCurso extends HttpServlet {
         			{
         				if(!cursoAlumno.insert(idCurso,a.getID()))
         				{
-        					System.out.println("Fall� la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
+        					System.out.println("Fallo en la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
         				}        			
         			}
         			idx++;
         		}
-        		String success  = "�Se han inscripto los alumnos con exito!";
+        		String success  = "Se han inscripto los alumnos con exito!";
 				System.out.println(success);
 				request.setAttribute("Exito", success);
 				redirectJSP = "/Exito.jsp";
@@ -356,7 +356,7 @@ public class ServletCurso extends HttpServlet {
         		
         		if(cursoDao.baja(ID))
         		{
-        			String success  = "�Se ha eliminado el curso con exito!";
+        			String success  = "Se ha eliminado el curso con exito!";
         			System.out.println(success);
         			request.setAttribute("Exito", success);
         			redirectJSP = "/Exito.jsp";
