@@ -72,8 +72,9 @@
        	</ul>
 	
 	    <!-- Nav Item - User Information -->
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item dropdown">
+        <ul class="form-inline my-2 my-lg-0">
+        <div class="form-inline my-2 my-lg-0">
+        <li class="nav-item dropdown" >
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span style="color:blue;"><%=d != null ? d.toString() : "Admin"%></span>
             <!-- <img class="img-profile rounded-circle" src="https://frgp.cvg.utn.edu.ar/pluginfile.php/63798/user/icon/snap/f1?rev=1246421"> -->
@@ -91,6 +92,7 @@
             </a>
           </div>
         </li>
+        </div>
     	</ul>
     	</div>
 	</nav>
@@ -103,7 +105,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">�Listo para salir?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">&iquest;Listo para salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">No</span>
           </button>
