@@ -328,7 +328,7 @@ public class ServletCurso extends HttpServlet {
         			{
         				if(!cursoAlumno.insert(idCurso,a.getID()))
         				{
-        					System.out.println("Falló la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
+        					System.out.println("Fallo en la inscripcion de alumno: " + a.getApellido() + a.getNombre() + ". Legajo " + a.getLegajo() );
         				}        			
         			}
         			idx++;

@@ -30,7 +30,7 @@ public class ServletReporte extends HttpServlet {
 		{
 			getServletContext().setAttribute("Cursos",listaCurso);
 		}
-		RequestDispatcher rq=request.getRequestDispatcher("/ServletReporte");
+		RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
        	rq.include(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -91,7 +91,7 @@ public class ServletReporte extends HttpServlet {
 				getServletContext().setAttribute("Cursos",listaCurso);
 			}
 			getServletContext().setAttribute("Materia", materia);
-			RequestDispatcher rq=request.getRequestDispatcher("/ServletReporte");
+			RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
 	       	rq.include(request, response);
 		}
 		else
@@ -102,7 +102,7 @@ public class ServletReporte extends HttpServlet {
 				System.out.println("Cantidad de cursos: "+listaCurso.size());
 				getServletContext().setAttribute("Cursos",listaCurso);
 			}
-			RequestDispatcher rq=request.getRequestDispatcher("/ServletReporte");
+			RequestDispatcher rq=request.getRequestDispatcher("/Main.jsp");
 	       	rq.include(request, response);
 		}
 	}
