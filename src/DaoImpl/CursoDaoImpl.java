@@ -5,15 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import Dao.*;
 import Entidades.Curso;
-import Entidades.Materia;
 
 public class CursoDaoImpl implements CursoDao{
 	private static final String insert = "INSERT INTO bdTPInt.cursos (docente, cuatrimestre, anio, materia) VALUES(?, ?, ?, ?)";
-	private static final String delete = "DELETE FROM bdTPInt.Docentes WHERE Dni = ?";
 	private static final String modify = "UPDATE bdTPInt.cursos SET docente=?, cuatrimestre=?, anio=?, materia=? Where ID=?";
 	private static final String baja   = "UPDATE bdTPInt.cursos SET Baja=1 WHERE ID=?";
 	private static final String readall = "SELECT * FROM bdTPInt.cursos WHERE baja=0";

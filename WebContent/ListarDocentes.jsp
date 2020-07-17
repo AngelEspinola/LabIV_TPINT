@@ -49,9 +49,9 @@
                             <th>DNI</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Mail</th>
+                            <th>Email</th>
                             <th>Telefono</th>
-                            <th>Fecha Nacimieno</th>
+                            <th>Nacimiento</th>
                             <th>Direccion</th>
                             <th>Localidad</th>
                             <th>Provincia</th>

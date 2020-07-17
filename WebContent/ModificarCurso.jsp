@@ -115,7 +115,7 @@
                             <div class="invalid-feedback"> Por favor completar este dato.</div>       
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label for="txtAnio">Año</label>
+                            <label for="txtAnio">A&ntilde;o</label>
                             <input type="number" class="form-control" id="txtAnio" name="txtAnio" value="" required>                         
                             <div class="valid-feedback">Completo!</div>
                             <div class="invalid-feedback"> Por favor completar este dato.</div>
@@ -197,7 +197,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="txtAnioNuevo">Año</label>
+                                    <label class="input-group-text" for="txtAnioNuevo">A&ntilde;o</label>
                                 </div>
                                 <input type="number" class="form-control" name="txtAnioNuevo" value="<%=anio%>" id="txtAnioNuevo" required>
                                 <div class="valid-feedback">Completo!</div>

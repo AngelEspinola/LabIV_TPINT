@@ -295,6 +295,9 @@ public class ServletCurso extends HttpServlet {
         		if(result == true)
         		{
         			request.setAttribute("Curso", curso);
+        			//ArrayList<Alumno> ListAlumno = alumnoDao.readFilterCurso(curso.getID());
+        			//request.getSession().setAttribute("Alumnos", ListAlumno);
+        			
         		}
         		else
         		{
